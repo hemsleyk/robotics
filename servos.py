@@ -23,6 +23,14 @@ def ctrlC(signum, frame):
     
     exit()
 
+#range 1.3-1.7, mapped from 1.5 by scaling factor of 0.002
+def setSpeeds(Lspeed,Rspeed):
+    pwm.set_pwm(LSERVO, 0, math.floor( (1.5+Lspeed*0.002) / 20 * 4096))
+    pwm.set_pwm(RSERVO, 0, math.floor( (1.5+Rspeed*0.002) / 20 * 4096))
+
+#def setSpeedsRPS(rpsLeft,rpsRight):
+    #pwm.set_pwm(LSERVO, 0, math.floor(rpsLeft/20*4096))
+
 # Attach the Ctrl+C signal interrupt
 # Need to remove this in production most likely.
 signal.signal(signal.SIGINT, ctrlC)
@@ -35,8 +43,8 @@ pwm.set_pwm_freq(50)
 # Write an initial value of 1.5, which keeps the servos stopped.
 # Due to how servos work, and the design of the Adafruit library, 
 # the value must be divided by 20 and multiplied by 4096.
-pwm.set_pwm(LSERVO, 0, math.floor(1.5 / 20 * 4096));
-pwm.set_pwm(RSERVO, 0, math.floor(1.5 / 20 * 4096));
+pwm.set_pwm(LSERVO, 0, math.floor(1.5 / 20 * 4096))
+pwm.set_pwm(RSERVO, 0, math.floor(1.5 / 20 * 4096))
 
 while True:
     # Write a maximum value of 1.7 for each servo.
@@ -46,6 +54,7 @@ while True:
     #pwm.set_pwm(LSERVO, 0, math.floor(1.6 / 20 * 4096));
     #pwm.set_pwm(RSERVO, 0, math.floor(1.6 / 20 * 4096));
     #time.sleep(4)
+    setSpeeds(25, 50)
     
     # Write a minimum value of 1.4 for each servo.
     # The robot will end up spinning in the other direction.
