@@ -10,13 +10,25 @@ import signal
 LENCODER = 17
 RENCODER = 18
 
+#left, right encoders respectively
+counts = (0,0)
+
+def resetCounts():
+    counts = (0,0)
+def getCounts():
+    return counts
+    print(counts[0],counts[1])
+
+
 # This function is called when the left encoder detects a rising edge signal.
 def onLeftEncode(pin):
     print("Left encoder ticked!")
+    counts[0]+=1
 
 # This function is called when the right encoder detects a rising edge signal.
 def onRightEncode(pin):
     print("Right encoder ticked!")
+    counts[1]+=1
 
 # This function is called when Ctrl+C is pressed.
 # It's intended for properly exiting the program.
@@ -44,4 +56,5 @@ GPIO.add_event_detect(RENCODER, GPIO.RISING, onRightEncode)
 # Prevent the program from exiting by adding a looping delay.
 while True:
     time.sleep(1)
+    getCounts()
 
