@@ -26,7 +26,7 @@ def ctrlC(signum, frame):
 #range 1.3-1.7, mapped from 1.5 by scaling factor of 0.002
 def setSpeeds(Lspeed,Rspeed):
     pwm.set_pwm(LSERVO, 0, math.floor( (1.5+Lspeed*0.002) / 20 * 4096))
-    pwm.set_pwm(RSERVO, 0, math.floor( (-1.5+Rspeed*0.002) / 20 * 4096))
+    pwm.set_pwm(RSERVO, 0, math.floor( (1.5-Rspeed*0.002) / 20 * 4096))
 
 #def setSpeedsRPS(rpsLeft,rpsRight):
     #pwm.set_pwm(LSERVO, 0, math.floor(rpsLeft/20*4096))
