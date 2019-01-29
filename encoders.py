@@ -11,24 +11,29 @@ LENCODER = 17
 RENCODER = 18
 
 #left, right encoders respectively
-counts = (0,0)
+lCount = 0
+rCount = 0
 
+#clean slate
 def resetCounts():
-    counts = (0,0)
+    lCount = 0
+    rCount = 0
+#return as tuple (immutable)
 def getCounts():
-    return counts
-    print(counts[0],counts[1])
+    print("L:",lCount)
+    print("R:",rCount)
+    return lCount,rCount
 
 
 # This function is called when the left encoder detects a rising edge signal.
 def onLeftEncode(pin):
-    print("Left encoder ticked!")
-    counts[0]+=1
+    #print("Left encoder ticked!")
+    lCount+=1
 
 # This function is called when the right encoder detects a rising edge signal.
 def onRightEncode(pin):
-    print("Right encoder ticked!")
-    counts[1]+=1
+    #print("Right encoder ticked!")
+    rCount+=1
 
 # This function is called when Ctrl+C is pressed.
 # It's intended for properly exiting the program.
