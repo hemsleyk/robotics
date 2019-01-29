@@ -37,7 +37,7 @@ pwm.set_pwm_freq(50)
 # the value must be divided by 20 and multiplied by 4096.
 pwm.set_pwm(LSERVO, 0, math.floor(1.5 / 20 * 4096));
 pwm.set_pwm(RSERVO, 0, math.floor(1.5 / 20 * 4096));
-
+'''
 while True:
     # Write a maximum value of 1.7 for each servo.
     # Since the servos are oriented in opposite directions,
@@ -52,3 +52,4 @@ while True:
     pwm.set_pwm(LSERVO, 0, math.floor(1.4 / 20 * 4096));
     pwm.set_pwm(RSERVO, 0, math.floor(1.4 / 20 * 4096));
     time.sleep(4)
+'''
