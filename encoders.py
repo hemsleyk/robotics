@@ -28,12 +28,12 @@ def getCounts():
 # This function is called when the left encoder detects a rising edge signal.
 def onLeftEncode(pin):
     #print("Left encoder ticked!")
-    lCount+=1
+    global lCount+=1
 
 # This function is called when the right encoder detects a rising edge signal.
 def onRightEncode(pin):
     #print("Right encoder ticked!")
-    rCount+=1
+    global rCount+=1
 
 # This function is called when Ctrl+C is pressed.
 # It's intended for properly exiting the program.
