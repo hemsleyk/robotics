@@ -54,7 +54,7 @@ while True:
     #pwm.set_pwm(LSERVO, 0, math.floor(1.6 / 20 * 4096));
     #pwm.set_pwm(RSERVO, 0, math.floor(1.6 / 20 * 4096));
     #time.sleep(4)
-    setSpeeds(80, 70)
+    setSpeeds(0, 0)
     
     # Write a minimum value of 1.4 for each servo.
     # The robot will end up spinning in the other direction.
