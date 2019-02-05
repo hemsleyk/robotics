@@ -37,7 +37,7 @@ def setSpeeds(Lspeed,Rspeed):
     #pwm.set_pwm(LSERVO, 0, math.floor(rpsLeft/20*4096))
 
 def setSpeedsIPS(ipsLeft,ipsRight):
-    setSpeeds(ipsLeft*100/LINEAR_V_MAX,ipsRight*100/LINEAR_V_MAX)
+    setSpeeds(ipsLeft*(100/LINEAR_V_MAX),ipsRight*(100/LINEAR_V_MAX))
 
 # Attach the Ctrl+C signal interrupt
 # Need to remove this in production most likely.
