@@ -1,4 +1,4 @@
-import lib
+from lib import servos, encoders
 
 def MoveForward(inches, seconds):
     counts = encoders.getCounts()
