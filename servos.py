@@ -11,6 +11,8 @@ import math
 LSERVO = 0
 RSERVO = 1
 
+IN_PER_TICK = 0.256
+
 # This function is called when Ctrl+C is pressed.
 # It's intended for properly exiting the program.
 # Need to remove this in production most likely.
