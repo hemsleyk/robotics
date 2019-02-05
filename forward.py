@@ -1,5 +1,5 @@
-import servos.py
 import encoders.py
+import servos.py
 
 def MoveForward(inches, seconds):
     counts
