@@ -1,5 +1,4 @@
-import ../lib/encoders.py
-import ../lib/servos.py
+import lib
 
 def MoveForward(inches, seconds):
     counts
