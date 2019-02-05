@@ -13,5 +13,6 @@ def MoveForward(inches, seconds):
         return 0
 
 MoveForward(12, 999999)
+MoveForward(12,1)
 
             
