@@ -11,7 +11,10 @@ import math
 LSERVO = 0
 RSERVO = 1
 
+D_WHEEL = 2.61
+R_WHEEL = D_WHEEL/2
 IN_PER_TICK = 0.256
+LINEAR_V_MAX = (10*math.pi*R_WHEEL)/6
 
 # This function is called when Ctrl+C is pressed.
 # It's intended for properly exiting the program.
