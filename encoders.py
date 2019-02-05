@@ -61,7 +61,7 @@ GPIO.add_event_detect(LENCODER, GPIO.RISING, onLeftEncode)
 GPIO.add_event_detect(RENCODER, GPIO.RISING, onRightEncode)
 
 # Prevent the program from exiting by adding a looping delay.
-while True:
-    time.sleep(1)
-    getCounts()
+#while True:
+#    time.sleep(1)
+#    getCounts()
 
