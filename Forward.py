@@ -1,6 +1,6 @@
 from lib import encoders, servos
 
-def MoveForward(inches, seconds):
+def MoveForward(inches=0.0, seconds=0.0):
     encoders.resetCounts()
     counts = encoders.getCounts()
     if(inches/seconds > servos.LINEAR_V_MAX):
