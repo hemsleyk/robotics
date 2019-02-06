@@ -42,7 +42,7 @@ def setSpeedsRPS(rpsLeft,rpsRight):
 def setSpeedsIPS(ipsLeft,ipsRight):
     setSpeeds(ipsLeft*(100/LINEAR_V_MAX),ipsRight*(100/LINEAR_V_MAX))
 
-def setSpeedsVW(v,w)
+def setSpeedsVW(v,w):
     if(w is 0):
         print("w must not be zero!")
         return 1
