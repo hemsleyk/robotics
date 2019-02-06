@@ -5,6 +5,7 @@ def MoveForward(inches, seconds):
     counts = encoders.getCounts()
     if(inches/seconds > servos.LINEAR_V_MAX):
         print("Requested action exceeds theoretical maximum velocity")
+        print("Maximum linear velocity:",servos.LINEAR_V_MAX)
         return 1
     else: #stop at ticks*IN_PER_TICK>=inches
         servos.setSpeedsIPS(inches/seconds,inches/seconds) #set velocity
