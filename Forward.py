@@ -1,6 +1,6 @@
 from lib import encoders, servos
 
-def MoveForward(inches=0.0, seconds=0.0):
+def MoveForward(inches, seconds):
     encoders.resetCounts()
     counts = encoders.getCounts()
     ips = inches/seconds
@@ -18,9 +18,9 @@ def MoveForward(inches=0.0, seconds=0.0):
 
 while True:
     inches = input("Distance to move in inches, 0 to quit:")
-    int(inches)
+    float(inches)
     if(inches is 0): break
     else:
         seconds = input("Time in seconds to complete maneuver:")
-        int(seconds)
+        float(seconds)
         MoveForward(inches,seconds)
