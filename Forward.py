@@ -18,7 +18,7 @@ def MoveForward(inches, seconds):
 
 while True:
     inches = float(input("Distance to move in inches, 0 to quit:"))
-    if (int(inches) is 0)): exit()
+    if (int(inches) is 0): exit()
     else:
         
         seconds = float(input("Time in seconds to complete maneuver:"))
