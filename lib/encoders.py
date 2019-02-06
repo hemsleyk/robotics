@@ -16,8 +16,10 @@ rCount = 0
 
 #clean slate
 def resetCounts():
-    global lCount = 0
-    global rCount = 0
+    global lCount
+    lCount = 0
+    global rCount
+    rCount = 0
 #return as tuple (immutable)
 def getCounts():
     print("L:",lCount)
