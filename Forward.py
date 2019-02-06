@@ -12,6 +12,6 @@ def MoveForward(inches, seconds):
         servos.setSpeeds(0,0)
         return 0
 
-MoveForward(12, 30)
-MoveForward(12,15)
-            
+MoveForward(12, 15)
+MoveForward(12,5)
+MoveForward(12,5/3)
