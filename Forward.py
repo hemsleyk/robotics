@@ -16,7 +16,7 @@ def MoveForward(inches=0.0, seconds=0.0):
         servos.setSpeeds(0,0)
         return 0
 
-while(true):
+while True:
     inches = input("Distance to move in inches, 0 to quit:")
     if(inches is 0): break
     else:
