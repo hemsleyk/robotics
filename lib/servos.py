@@ -50,8 +50,6 @@ def setSpeedsVW(v,w):
         R = v/w #radius of curve = distance to ICC
         setSpeedsIPS(w*(R+3.95/2),w*(R-3.95/2))
         return 0
-    
-}
 
 # Attach the Ctrl+C signal interrupt
 # Need to remove this in production most likely.
