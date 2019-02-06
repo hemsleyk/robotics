@@ -11,10 +11,11 @@ import math
 LSERVO = 0
 RSERVO = 1
 
-D_WHEEL = 2.61
-R_WHEEL = D_WHEEL/2
+DI_WHEEL = 2.61
+RD_WHEEL = DI_WHEEL/2
 IN_PER_TICK = 0.256
-LINEAR_V_MAX = (10*math.pi*R_WHEEL)/6
+LINEAR_V_MAX = (10*math.pi*RD_WHEEL)/6
+R_S_MAX = 0.83 #from datasheet
 
 # This function is called when Ctrl+C is pressed.
 # It's intended for properly exiting the program.
@@ -29,15 +30,28 @@ def ctrlC(signum, frame):
     exit()
 
 #range 1.4-1.6, mapped from 1.5 by scaling factor of 0.001
-def setSpeeds(Lspeed,Rspeed):
+def setSpeeds(Lspeed=0.0,Rspeed=0.0):
     pwm.set_pwm(LSERVO, 0, math.floor( (1.5+Lspeed*0.001) / 20 * 4096))
     pwm.set_pwm(RSERVO, 0, math.floor( (1.5-Rspeed*0.001) / 20 * 4096))
 
 #def setSpeedsRPS(rpsLeft,rpsRight):
     #pwm.set_pwm(LSERVO, 0, math.floor(rpsLeft/20*4096))
+def setSpeedsRPS(rpsLeft,rpsRight):
+    setSpeeds(rpsLeft*(100/R_S_MAX),rpsRight(100/R_S_MAX))
 
 def setSpeedsIPS(ipsLeft,ipsRight):
     setSpeeds(ipsLeft*(100/LINEAR_V_MAX),ipsRight*(100/LINEAR_V_MAX))
+
+def setSpeedsVW(v,w)
+    if(w is 0):
+        print("w must not be zero!")
+        return 1
+    else:
+        float R = v/w; //radius of curve = distance to ICC
+        setSpeedsIPS(w*(R+3.95/2),w*(R-3.95/2))
+        return 0
+    
+}
 
 # Attach the Ctrl+C signal interrupt
 # Need to remove this in production most likely.
