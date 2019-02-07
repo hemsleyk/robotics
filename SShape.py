@@ -19,14 +19,14 @@ def MoveSShape(R1, R2, Y):
         return 1
     else: #stop at ticks*IN_PER_TICK>=inches
         print("Beginning s-shaped motion of",D,"inches over",Y,"seconds with a velocity of",v,"in/s")
-        servos.setSpeedsVW(v,(v/R1)) #set velocity
+        servos.setSpeedsVW(v,(v/R1)/(D1/D)) #set velocity
         while(counts[0] <= D1/servos.IN_PER_TICK or counts[1] <= D1/servos.IN_PER_TICK): counts = encoders.getCounts()
         servos.setSpeeds(0,0)
         time.sleep(0.1)
         input("Press enter to continue")
         encoders.resetCounts()
         counts = encoders.getCounts()
-        servos.setSpeedsVW(v,-(v/R2))
+        servos.setSpeedsVW(v,-(v/R2)/(D1/D))
         while(counts[0] <= D2/servos.IN_PER_TICK or counts[1] <= D2/servos.IN_PER_TICK): counts = encoders.getCounts()
         servos.setSpeeds(0,0)
         return 0
