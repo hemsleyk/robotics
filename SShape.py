@@ -14,10 +14,10 @@ def MoveSShape(R1, R2, Y):
     Y1 = Y*R1/D
     Y2 = Y*R2/D
 
-    if(v > servos.LINEAR_V_MAX):
+    if(V > servos.LINEAR_V_MAX):
         print("Requested action exceeds theoretical maximum velocity")
         print("Maximum velocity:",servos.LINEAR_V_MAX)
-        print("Requested velocity:",v)
+        print("Requested velocity:",V)
         return 1
     else: #stop at ticks*IN_PER_TICK>=inches
         print("Beginning s-shaped motion of",D,"inches over",Y,"seconds with a velocity of",V,"in/s")
