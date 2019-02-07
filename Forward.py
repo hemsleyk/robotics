@@ -1,8 +1,5 @@
 from lib import encoders, servos
 
-def FloatEq (x,y):
-    return abs(x-y) < 1e-20
-
 def MoveForward(inches, seconds):
     encoders.resetCounts()
     counts = encoders.getCounts()

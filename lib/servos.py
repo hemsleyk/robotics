@@ -13,9 +13,10 @@ RSERVO = 1
 
 DI_WHEEL = 2.61
 RD_WHEEL = DI_WHEEL/2
+DM_WHEEL = 3.95 #separation
 IN_PER_TICK = 0.256
 LINEAR_V_MAX = (10*math.pi*RD_WHEEL)/6
-R_S_MAX = 0.83 #from datasheet
+R_S_MAX = 0.80 #from slides
 
 # This function is called when Ctrl+C is pressed.
 # It's intended for properly exiting the program.
@@ -28,6 +29,10 @@ def ctrlC(signum, frame):
     pwm.set_pwm(RSERVO, 0, 0);
     
     exit()
+
+#hack to test if floats are equal
+def FloatEq (x,y):
+    return abs(x-y) < 1e-20
 
 #range 1.4-1.6, mapped from 1.5 by scaling factor of 0.001
 def setSpeeds(Lspeed,Rspeed):
@@ -43,12 +48,12 @@ def setSpeedsIPS(ipsLeft,ipsRight):
     setSpeeds(ipsLeft*(100/LINEAR_V_MAX),ipsRight*(100/LINEAR_V_MAX))
 
 def setSpeedsVW(v,w):
-    if(w is 0):
+    if(FloatEQ(w,0)):
         print("w must not be zero!")
         return 1
     else:
         R = v/w #radius of curve = distance to ICC
-        setSpeedsIPS(w*(R+3.95/2),w*(R-3.95/2))
+        setSpeedsIPS(w*(R+DM_WHEEL/2),w*(R-DM_WHEEL/2))
         return 0
 
 # Attach the Ctrl+C signal interrupt
