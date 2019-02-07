@@ -50,7 +50,7 @@ def setSpeedsVW(v,w):
         print("w must not be zero!")
         return 1
     else:
-        R = abs(v/w) #radius of curve = distance to ICC
+        R = v/w #radius of curve = distance to ICC
         if(w>0):
             setSpeedsIPS(w*(R+DM_WHEEL/2),w*(R-DM_WHEEL/2))
         else:
