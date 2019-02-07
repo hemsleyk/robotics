@@ -25,7 +25,7 @@ def MoveSShape(R1, R2, Y):
         time.sleep(0.1)
         input("Press enter to continue")
         encoders.resetCounts()
-        print(counts[0])
+        counts = encoders.getCounts()
         servos.setSpeedsVW(v,-(v/R2))
         while(counts[0] <= D2/servos.IN_PER_TICK or counts[1] <= D2/servos.IN_PER_TICK): counts = encoders.getCounts()
         servos.setSpeeds(0,0)
