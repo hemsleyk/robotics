@@ -5,7 +5,7 @@ import time
 import Adafruit_PCA9685
 import signal
 import math
-import encoders
+from lib import encoders
 
 # The servo hat uses its own numbering scheme within the Adafruit library.
 # 0 represents the first servo, 1 for the second, and so on.
