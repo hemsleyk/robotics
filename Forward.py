@@ -18,11 +18,11 @@ def MoveForward(inches, seconds):
 
 while True:
     inches = float(input("Distance to move in inches, 0 to quit:"))
-    if (FloatEq(inches,0)): exit()
+    if (servos.FloatEq(inches,0)): exit()
     else:
         
         seconds = float(input("Time in seconds to complete maneuver:"))
-        if (FloatEq(inches,0)):
+        if (servos.FloatEq(inches,0)):
             print("Seconds is a divisor and cannot be zero")
             exit()
         else:

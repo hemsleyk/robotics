@@ -18,12 +18,12 @@ def MoveSShape(R1, R2, Y):
 
 while True:
     R1 = float(input("R1 in inches, 0 to quit:"))
-    if (FloatEq(R1,0)): exit()
+    if (servos.FloatEq(R1,0)): exit()
     R2 = float(input("R2 in inches, 0 to quit:"))
-    if (FloatEq(R2,0)): exit()
+    if (servos.FloatEq(R2,0)): exit()
     else:
         seconds = float(input("Time in seconds Y to complete maneuver:"))
-        if (FloatEq(inches,0)):
+        if (servos.FloatEq(inches,0)):
             print("Seconds is a divisor and cannot be zero")
             exit()
         else:
