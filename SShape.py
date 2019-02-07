@@ -28,7 +28,7 @@ def MoveSShape(R1, R2, Y):
         encoders.resetCounts()
         counts = encoders.getCounts()
         #servos.setSpeedsVW(v/(D2/D),-2*((v/R2)/(D2/D)))
-        servos.setSpeedsVW(v,2*v/R2)
+        servos.setSpeedsVW(v,-2*v/R2)
         while(counts[0] <= D2/servos.IN_PER_TICK and counts[1] <= D2/servos.IN_PER_TICK): counts = encoders.getCounts()
         servos.setSpeeds(0,0)
         return 0
