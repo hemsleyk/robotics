@@ -48,7 +48,7 @@ def setSpeedsIPS(ipsLeft,ipsRight):
     setSpeeds(ipsLeft*(100/LINEAR_V_MAX),ipsRight*(100/LINEAR_V_MAX))
 
 def setSpeedsVW(v,w):
-    if(FloatEQ(w,0)):
+    if(FloatEq(w,0)):
         print("w must not be zero!")
         return 1
     else:
