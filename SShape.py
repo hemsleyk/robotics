@@ -1,4 +1,5 @@
 from lib import encoders, servos
+import math
 
 def MoveSShape(R1, R2, Y):
     encoders.resetCounts()
