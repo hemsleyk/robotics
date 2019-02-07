@@ -9,10 +9,8 @@ def MoveSShape(R1, R2, Y):
     D2 = math.pi*R2
     D = D1+D2
     V = D/Y
-    V1 = V/(D1/D)
-    V2 = V/(D2/D)
-    Y1 = Y*R1/D
-    Y2 = Y*R2/D
+    V1 = V*(D1/D)
+    V2 = V*(D2/D)
 
     if(V > servos.LINEAR_V_MAX):
         print("Requested action exceeds theoretical maximum velocity")
@@ -30,7 +28,7 @@ def MoveSShape(R1, R2, Y):
         encoders.resetCounts()
         counts = encoders.getCounts()
         #servos.setSpeedsVW(v/(D2/D),-2*((v/R2)/(D2/D)))
-        servos.setSpeedsVW(V2,V2/R2)
+        servos.setSpeedsVW(V2,-V2/R2)
         while(counts[0] <= D2/servos.IN_PER_TICK and counts[1] <= D2/servos.IN_PER_TICK): counts = encoders.getCounts()
         servos.setSpeeds(0,0)
         return 0
