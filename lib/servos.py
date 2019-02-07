@@ -64,6 +64,7 @@ def calibrateSpeeds():
     global measuredRPSright
     global measuredRPSleft
 
+    setSpeeds(0,0)
     encoders.resetCounts()
     setSpeeds(0,100)
     time.sleep(1)
@@ -71,6 +72,7 @@ def calibrateSpeeds():
     start = time.monotonic()
     while(start+10>time.monotonic()):
         measuredRPSright.append(encoders.getSpeeds()[1])
+    setSpeeds(0,0)
     print("printing speeds:")
     print(*measuredRPSright, sep='\n')
 
