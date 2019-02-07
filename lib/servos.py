@@ -19,8 +19,8 @@ IN_PER_TICK = 0.256
 LINEAR_V_MAX = (10*math.pi*RD_WHEEL)/6
 R_S_MAX = 0.80 #from slides
 
-measuredRPSright
-measuredRPSleft
+measuredRPSright = 0
+measuredRPSleft = 0
 
 # This function is called when Ctrl+C is pressed.
 # It's intended for properly exiting the program.
