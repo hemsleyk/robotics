@@ -21,7 +21,7 @@ def MoveSShape(R1, R2, Y):
         return 1
     else: #stop at ticks*IN_PER_TICK>=inches
         print("Beginning s-shaped motion of",D,"inches over",Y,"seconds with a velocity of",V,"in/s")
-        servos.setSpeedsVW(V,2*math.pi*(2*P1*Y))
+        servos.setSpeedsVW(V,2*math.pi*2*P1*Y)
         while(counts[0] <= 2*D1/servos.IN_PER_TICK and counts[1] <= 2*D1/servos.IN_PER_TICK): counts = encoders.getCounts()
         
         servos.setSpeeds(0,0) #stop the robot
@@ -30,7 +30,7 @@ def MoveSShape(R1, R2, Y):
         input("Press enter to continue")
         encoders.resetCounts() #clean slate
         counts = encoders.getCounts() #need to do this too
-        servos.setSpeedsVW(V,-2*math.pi*(2*P1*Y))
+        servos.setSpeedsVW(V,-2*math.pi*2*P1*Y)
         while(counts[0] <= 2*D2/servos.IN_PER_TICK and counts[1] <= 2*D2/servos.IN_PER_TICK): counts = encoders.getCounts()
         servos.setSpeeds(0,0)
         return 0
