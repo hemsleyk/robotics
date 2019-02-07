@@ -66,7 +66,7 @@ def calibrateSpeeds():
 
     encoders.resetCounts()
     setSpeeds(0,100)
-    sleep(1)
+    time.sleep(1)
     
     start = time.monotonic()
     while(start+10>time.monotonic()):
