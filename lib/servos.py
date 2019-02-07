@@ -40,7 +40,7 @@ def setSpeeds(Lspeed,Rspeed):
     pwm.set_pwm(RSERVO, 0, math.floor( (1.5-Rspeed*0.001) / 20 * 4096))
 
 def setSpeedsRPS(rpsLeft,rpsRight):
-    setSpeeds(rpsLeft*(100.0/R_S_MAX),rpsRight(100.0/R_S_MAX))
+    setSpeeds(rpsLeft*(100.0/R_S_MAX),rpsRight*(100.0/R_S_MAX))
 
 def setSpeedsIPS(ipsLeft,ipsRight):
     setSpeedsRPS(ipsLeft/(2*math.pi*RD_WHEEL),ipsRight/(2*math.pi*RD_WHEEL))
