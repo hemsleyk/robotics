@@ -4,16 +4,17 @@ import math
 def MoveSShape(R1, R2, Y):
     encoders.resetCounts()
     counts = encoders.getCounts()
-    v = math.pi*(R1+R2)/Y
+    D = math.pi*(R1+R2)
+    v = D/Y
     if(v > servos.LINEAR_V_MAX):
         print("Requested action exceeds theoretical maximum velocity")
         print("Maximum velocity:",servos.LINEAR_V_MAX)
         print("Requested velocity:",v)
         return 1
     else: #stop at ticks*IN_PER_TICK>=inches
-        print("Beginning s-shaped motion of",inches,"over",seconds,"seconds with a velocity of",v,"in/s")
+        print("Beginning s-shaped motion of",D,"inches over",Y,"seconds with a velocity of",v,"in/s")
         servos.setSpeedsVW(v,v/R1) #set velocity
-        while(counts[0] <= inches/servos.IN_PER_TICK or counts[1] <= inches/servos.IN_PER_TICK): counts = encoders.getCounts()
+        while(counts[0] <= D/servos.IN_PER_TICK or counts[1] <= D/servos.IN_PER_TICK): counts = encoders.getCounts()
         servos.setSpeeds(v,-v/R2)
         return 0
 
