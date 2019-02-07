@@ -54,7 +54,7 @@ def setSpeedsVW(v,w):
         if(w>0):
             setSpeedsIPS(w*(R+DM_WHEEL/2),w*(R-DM_WHEEL/2))
         else:
-            setSpeedsIPS(-w*(R+DM_WHEEL/2),-w*(R-DM_WHEEL/2))
+            setSpeedsIPS(w*(R-DM_WHEEL/2),w*(R+DM_WHEEL/2))
         return 0
 
 # Attach the Ctrl+C signal interrupt
