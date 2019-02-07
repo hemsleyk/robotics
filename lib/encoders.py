@@ -12,7 +12,12 @@ RENCODER = 18
 
 #left, right encoders respectively
 lCount = 0
+lTime = 0
+lSpeed = 0
 rCount = 0
+rTime = 0
+rSpeed = 0
+
 
 #clean slate
 def resetCounts():
@@ -33,13 +38,28 @@ def getCounts():
 def onLeftEncode(pin):
     #print("Left encoder ticked!")
     global lCount
+    global lTime
+    global lSpeed
     lCount+=1
+
+    #track the speed
+    now = time.monotonic()
+    lSpeed = (1.0 / 32.0) / (now-lTime)
+    lTime=now
 
 # This function is called when the right encoder detects a rising edge signal.
 def onRightEncode(pin):
     #print("Right encoder ticked!")
     global rCount
+    global rTime
+    global rSpeed
     rCount+=1
+    
+    #track the speed
+    now = time.monotonic()
+    rSpeed = (1.0 / 32.0) / (now-rTime)
+    rTime=now
+
 
 # This function is called when Ctrl+C is pressed.
 # It's intended for properly exiting the program.
@@ -47,6 +67,11 @@ def ctrlC(signum, frame):
     print("Exiting")
     GPIO.cleanup()
     exit()
+
+def getSpeeds():
+    global lSpeed
+    global rSpeed
+    return lSpeed,rSpeed
 
 # Attach the Ctrl+C signal interrupt
 signal.signal(signal.SIGINT, ctrlC)

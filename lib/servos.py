@@ -5,6 +5,7 @@ import time
 import Adafruit_PCA9685
 import signal
 import math
+import encoders
 
 # The servo hat uses its own numbering scheme within the Adafruit library.
 # 0 represents the first servo, 1 for the second, and so on.
@@ -17,6 +18,9 @@ DM_WHEEL = 3.95 #separation
 IN_PER_TICK = 0.256
 LINEAR_V_MAX = (10*math.pi*RD_WHEEL)/6
 R_S_MAX = 0.80 #from slides
+
+measuredRPSright
+measuredRPSleft
 
 # This function is called when Ctrl+C is pressed.
 # It's intended for properly exiting the program.
@@ -56,6 +60,23 @@ def setSpeedsVW(v,w):
         else:
             setSpeedsIPS(w*(R+DM_WHEEL/2),w*(R-DM_WHEEL/2))
         return 0
+def calibrateSpeeds():
+    global measuredRPSright
+    global measuredRPSleft
+
+    encoders.resetCounts()
+    setSpeeds(0,100)
+    sleep(1)
+    
+    start = time.monotonic()
+    while(start+10>time.monotonic()):
+        measuredRPSright.append(encoders.getSpeeds()[1])
+    print("printing speeds:")
+    print(*measuredRPSright, sep='\n')
+
+    
+
+
 
 # Attach the Ctrl+C signal interrupt
 # Need to remove this in production most likely.
