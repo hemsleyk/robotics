@@ -9,8 +9,10 @@ def MoveSShape(R1, R2, Y):
     D2 = math.pi*R2
     D = D1+D2
     V = D/Y
-    V1 = V/(D1/D)
-    V2 = V/(D2/D)
+
+    #portion of task spent on each arc
+    P1 = D1/D
+    P2 = D2/D
 
     if(V > servos.LINEAR_V_MAX):
         print("Requested action exceeds theoretical maximum velocity")
@@ -19,16 +21,16 @@ def MoveSShape(R1, R2, Y):
         return 1
     else: #stop at ticks*IN_PER_TICK>=inches
         print("Beginning s-shaped motion of",D,"inches over",Y,"seconds with a velocity of",V,"in/s")
-        #servos.setSpeedsVW(v/(D1/D),4*((v/R1)/(D1/D))) #set velocity
-        servos.setSpeedsVW(V,V/(R1))
+        servos.setSpeedsVW(V,2*math.pi*(2*P1*Y))
         while(counts[0] <= 2*D1/servos.IN_PER_TICK and counts[1] <= 2*D1/servos.IN_PER_TICK): counts = encoders.getCounts()
-        servos.setSpeeds(0,0)
-        time.sleep(0.1)
+        
+        servos.setSpeeds(0,0) #stop the robot
+        time.sleep(0.05) #robot stops fast!
+        
         input("Press enter to continue")
-        encoders.resetCounts()
-        counts = encoders.getCounts()
-        #servos.setSpeedsVW(v/(D2/D),-2*((v/R2)/(D2/D)))
-        servos.setSpeedsVW(V,-V/(R2))
+        encoders.resetCounts() #clean slate
+        counts = encoders.getCounts() #need to do this too
+        servos.setSpeedsVW(V,-2*math.pi*(2*P1*Y))
         while(counts[0] <= 2*D2/servos.IN_PER_TICK and counts[1] <= 2*D2/servos.IN_PER_TICK): counts = encoders.getCounts()
         servos.setSpeeds(0,0)
         return 0
