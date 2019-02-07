@@ -23,7 +23,7 @@ while True:
     if (servos.FloatEq(R2,0)): exit()
     else:
         seconds = float(input("Time in seconds Y to complete maneuver:"))
-        if (servos.FloatEq(inches,0)):
+        if (servos.FloatEq(seconds,0)):
             print("Seconds is a divisor and cannot be zero")
             exit()
         else:
