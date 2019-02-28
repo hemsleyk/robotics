@@ -31,9 +31,6 @@ GPIO.output(LSHDN, GPIO.LOW)
 GPIO.output(FSHDN, GPIO.LOW)
 GPIO.output(RSHDN, GPIO.LOW)
 
-# Connect ctrl+C
-signal.signal(signal.SIGINT, ctrlC)
-
 time.sleep(0.01)
 
 # Initialize all sensors
@@ -57,6 +54,7 @@ time.sleep(0.01)
 fSensor.start_ranging(VL53L0X.VL53L0X_GOOD_ACCURACY_MODE)
 
 # Stop measurement for all sensors
+#handled in encoders, will be moved
 #lSensor.stop_ranging()
 #fSensor.stop_ranging()
 #rSensor.stop_ranging()
