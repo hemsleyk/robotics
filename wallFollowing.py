@@ -12,7 +12,7 @@ else:
         YtdF = distance.fSensor.get_distance()/25.4 #convert to inches
         YtdR = distance.rSensor.get_distance()/25.4 #convert to inches
         YtdL = distance.lSensor.get_distance()/25.4 #convert to inches
-        servos.setSpeedsVW(max(0.5,-Kp*(Rt-YtdF)),max(0.01,-Kp*(Rt-YtdR)*math.pi/6))
+        servos.setSpeedsVW(-Kp*(Rt-YtdF),max(-Kp*(Rt-YtdR)*math.pi/6))
 
         #if (YtdF <= 2*Rt):
 	    #getting cornered, WALL NOT SAFE
