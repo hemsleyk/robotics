@@ -12,7 +12,7 @@ else:
         YtdF = distance.fSensor.get_distance()/25.4 #convert to inches
         YtdR = distance.rSensor.get_distance()/25.4 #convert to inches
         YtdL = distance.lSensor.get_distance()/25.4 #convert to inches
-        if(math.fabs(YtdF-YtdR) < 0.5*Rt):
+        if(math.fabs(YtdF-YtdR) < 0.25*Rt):
             servos.setSpeedsVW(Kp*(Rt-YtdF),Kp*(Rt-YtdR)*math.pi/6)
             time.sleep(0.025)
         else:
