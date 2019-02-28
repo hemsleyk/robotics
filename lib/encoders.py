@@ -5,6 +5,7 @@
 import time
 import RPi.GPIO as GPIO
 import signal
+from lib import distance
 
 # Pins that the encoders are connected to
 LENCODER = 17
@@ -66,6 +67,9 @@ def onRightEncode(pin):
 def ctrlC(signum, frame):
     print("Exiting")
     GPIO.cleanup()
+    distance.lSensor.stop_ranging()
+    distance.fSensor.stop_ranging()
+    distance.rSensor.stop_ranging()
     exit()
 
 def getSpeeds():

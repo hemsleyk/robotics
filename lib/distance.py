@@ -3,6 +3,7 @@
 # See https://learn.adafruit.com/adafruit-vl53l0x-micro-lidar-distance-sensor-breakout/overview for more details.
 
 import time
+import signal
 import sys
 sys.path.append('/home/pi/VL53L0X_rasp_python/python')
 import VL53L0X
@@ -29,6 +30,9 @@ GPIO.setup(RSHDN, GPIO.OUT)
 GPIO.output(LSHDN, GPIO.LOW)
 GPIO.output(FSHDN, GPIO.LOW)
 GPIO.output(RSHDN, GPIO.LOW)
+
+# Connect ctrl+C
+signal.signal(signal.SIGINT, ctrlC)
 
 time.sleep(0.01)
 
