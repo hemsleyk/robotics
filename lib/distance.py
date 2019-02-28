@@ -53,6 +53,6 @@ time.sleep(0.01)
 fSensor.start_ranging(VL53L0X.VL53L0X_GOOD_ACCURACY_MODE)
 
 # Stop measurement for all sensors
-lSensor.stop_ranging()
-fSensor.stop_ranging()
-rSensor.stop_ranging()
+#lSensor.stop_ranging()
+#fSensor.stop_ranging()
+#rSensor.stop_ranging()
