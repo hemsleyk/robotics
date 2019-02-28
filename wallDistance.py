@@ -1,4 +1,6 @@
-from lib import encoders, servos, distance, time
+import time
+from lib import encoders, servos, distance
+
 Rt = 5.00 #desired distance in inches
 
 Kp = float(input("Value of Kp for prop. control:"))
