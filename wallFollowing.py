@@ -15,7 +15,7 @@ else:
         if(math.fabs(YtdF-YtdR) < 0.25*Rt):
             servos.setSpeedsVW(Kp*(Rt-YtdF),Kp*(Rt-YtdR)*math.pi/6)
             time.sleep(0.1)
-        else
+        else:
             servos.setSpeedsVW(-Kp*(Rt-YtdF),-Kp*(Rt-YtdR)*math.pi/6)
             time.sleep(0.1)
 
