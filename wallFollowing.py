@@ -3,7 +3,7 @@ from lib import encoders, servos, distance
 
 Rt = 5.0
 calibrate = input("Calibrate? 1 for yes, 0 for no")
-if(calibrate): servos.calibrateSpeeds()
+if(calibrate is 1): servos.calibrateSpeeds()
 
 Kp = float(input("Value of Kp for prop. control:"))
 if (servos.FloatEq(Kp,0)): exit()
