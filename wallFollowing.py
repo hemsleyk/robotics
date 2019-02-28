@@ -2,6 +2,8 @@ import time, math
 from lib import encoders, servos, distance
 
 Rt = 5.0
+calibrate = input("Calibrate? 1 for yes, 0 for no")
+if(calibrate): servos.calibrateSpeeds()
 
 Kp = float(input("Value of Kp for prop. control:"))
 if (servos.FloatEq(Kp,0)): exit()

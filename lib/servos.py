@@ -29,8 +29,8 @@ def ctrlC(signum, frame):
     print("Exiting")
     
     # Stop the servos
-    pwm.set_pwm(LSERVO, 0, 0);
-    pwm.set_pwm(RSERVO, 0, 0);
+    pwm.set_pwm(LSERVO, 0, 0)
+    pwm.set_pwm(RSERVO, 0, 0)
     
     exit()
 
@@ -61,6 +61,7 @@ def setSpeedsVW(v,w):
             setSpeedsIPS(w*(R+DM_WHEEL/2),w*(R-DM_WHEEL/2))
         return 0
 def calibrateSpeeds():
+    global R_S_MAX
     global measuredRPSright
     global measuredRPSleft
 
@@ -73,9 +74,29 @@ def calibrateSpeeds():
     while(start+10>time.monotonic()):
         measuredRPSright.append(encoders.getSpeeds()[1])
         time.sleep(0.03)
+    
+    start = time.monotonic()
     setSpeeds(0,0)
-    print("printing speeds:")
-    print(*measuredRPSright, sep='\n')
+    time.sleep(0.03)
+    setSpeeds(100,0)
+
+    while(start+10>time.monotonic()):
+        measuredRPSleft.append(encoders.getSpeeds()[0])
+        time.sleep(0.03)
+
+    start = time.monotonic()
+    setSpeeds(0,0)
+    time.sleep(0.03)
+    setSpeeds(100,100)
+
+    while(start+10>time.monotonic()):
+        measuredRPSright.append(encoders.getSpeeds()[1])
+        measuredRPSleft.append(encoders.getSpeeds()[0])
+        time.sleep(0.03)
+
+    setSpeeds(0,0)
+    
+    R_S_MAX = (sum(measuredRPSleft)/len(measuredRPSleft)+sum(measuredRPSright)/len(measuredRPSright))/2
 
     
 
