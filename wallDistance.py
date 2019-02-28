@@ -11,4 +11,4 @@ else:
         Yt = distance.fSensor.get_distance()/25.4 #convert to inches
         servos.setSpeedsIPS((-Kp*(Rt-Yt)),-Kp*(Rt-Yt))
         print("Distance: {}\tTime: {}".format(Yt, time.monotonic() - Dt)) #data read, pipe to file?
-        time.sleep(0.01)
+        time.sleep(0.025)
