@@ -14,8 +14,8 @@
 
 import cv2 as cv
 import time
-from ThreadedWebcam import ThreadedWebcam
-from UnthreadedWebcam import UnthreadedWebcam
+from lib import ThreadedWebcam
+from lib import UnthreadedWebcam
 
 FPS_SMOOTHING = 0.9
 
