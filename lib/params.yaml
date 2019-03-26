@@ -11,15 +11,15 @@ blobColor: 255
 filterByArea: 1
 minArea: 750.
 maxArea: 300000.
-filterByCircularity: 0
-minCircularity: 0.0
-maxCircularity: 1.
+filterByCircularity: 1
+minCircularity: 0.1
+maxCircularity: 0.5
 filterByInertia: 0
 minInertiaRatio: 0.0
-maxInertiaRatio: 1.
-filterByConvexity: 0
-minConvexity: 0.0
-maxConvexity: 1.
+maxInertiaRatio: 1.0
+filterByConvexity: 1
+minConvexity: 0.7
+maxConvexity: 1.0
 
 # See https://www.learnopencv.com/blob-detection-using-opencv-python-c/
 # for an explanation on modifying these parameters.
