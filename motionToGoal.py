@@ -8,4 +8,5 @@ def FrameGoal():
 while True:
     GoalFound = False
     while GoalFound: #center the goal, approach with prop con
+        print("wee")
     FrameGoal()

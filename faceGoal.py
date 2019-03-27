@@ -8,4 +8,5 @@ def FrameGoal():
 while True:
     GoalFound = False
     while GoalFound: #center the goal, stay stationary, use propcon
-    FrameGoal()
+        print("wee")
+    FrameGoal() #goal isn't visible
