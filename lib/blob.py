@@ -25,8 +25,8 @@ WINDOW2 = "Detected Blobs - Press Esc to quit"
 
 # Default HSV ranges
 # Note: the range for hue is 0-180, not 0-255
-minH =   0; minS = 127; minV =   0;
-maxH = 180; maxS = 255; maxV = 255;
+minH =   0; minS = 127; minV =   0
+maxH = 180; maxS = 255; maxV = 255
 
 
 # These functions are called when the user moves a trackbar
@@ -71,7 +71,7 @@ def onMaxVTrackbar(val):
 # Initialize the threaded camera
 # You can run the unthreaded camera instead by changing the line below.
 # Look for any differences in frame rate and latency.
-camera = ThreadedWebcam() # UnthreadedWebcam()
+camera = ThreadedWebcam.ThreadedWebcam() # UnthreadedWebcam()
 camera.start()
 
 # Initialize the SimpleBlobDetector
@@ -81,7 +81,7 @@ detector = cv.SimpleBlobDetector_create(params)
 # Attempt to open a SimpleBlobDetector parameters file if it exists,
 # Otherwise, one will be generated.
 # These values WILL need to be adjusted for accurate and fast blob detection.
-fs = cv.FileStorage("params.yaml", cv.FILE_STORAGE_READ); #yaml, xml, or json
+fs = cv.FileStorage("params.yaml", cv.FILE_STORAGE_READ) #yaml, xml, or json
 if fs.isOpened():
     detector.read(fs.root())
 else:
