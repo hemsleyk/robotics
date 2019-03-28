@@ -121,10 +121,6 @@ def DetectPoints(camera):
     
     # Write text onto the frame
     cv.putText(frame_with_keypoints, "{} blobs".format(len(keypoints)), (5, 35), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0))
-    
-    # Display the frame
-    cv.imshow(WINDOW1, mask)
-    cv.imshow(WINDOW2, frame_with_keypoints)
 
     #return largest
     return sorted(keypoints, key=lambda keypoint: keypoint.response,reverse=True)
