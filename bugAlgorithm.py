@@ -42,12 +42,12 @@ while True:
     elif YtdF*2.54 < 10 or wallFollowing is True: #cast dist to cm, execute wall following
         wallFollowing = True #left turn robot
         print("wall following")
-        if(YtdR*2.54 > 15 and YtdF > 15): #safety margin
+        if(YtdL*2.54 > 15 and YtdF > 15): #safety margin
             wallFollowing = False
-        elif(math.fabs(YtdF-YtdR) < 1): #in a corner
-            servos.setSpeedsVW(Kp*(4-YtdF),Kp*(4-YtdR)*math.pi/6)
+        elif(math.fabs(YtdF-YtdL) < 1): #in a corner
+            servos.setSpeedsVW(Kp*(4-YtdF),Kp*(4-YtdL)*math.pi/6)
         else: #following
-            servos.setSpeedsVW(-Kp*(4-YtdF),-Kp*(4-YtdR)*math.pi/6)
+            servos.setSpeedsVW(-Kp*(4-YtdF),-Kp*(4-YtdL)*math.pi/6)
     elif math.fabs(RtCs-YtCs) > deadzoneCs: #goal is not visible and we are not at an obstacle
         print("finding goal")
         servos.setSpeeds(-Kp/3*(RtCs-YtdF),Kp/3*(RtCs-YtCs)) #rotate in place to acquire the goal
