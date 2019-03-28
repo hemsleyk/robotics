@@ -24,14 +24,13 @@ while True:
     YtdF = distance.fSensor.get_distance()/25.4 #convert to inches
     YtdR = distance.rSensor.get_distance()/25.4 #convert to inches
     YtdL = distance.lSensor.get_distance()/25.4 #convert to inches
-    if goalBlobs:
-        YtCs = goalBlobs[0].pt[0] #store the last known X for proportional control
     
-    if goalBlobs and YtdF*2.54 > 10 and wallFollowing is False: #goal is visible, execute motion to goal
+    if goalBlobs: #goal is visible, execute motion to goal
+        YtCs = goalBlobs[0].pt[0] #store the last known X for proportional control
         print("motion to goal")
         if math.fabs(RtCs-YtCs) > deadzoneCs:
             servos.setSpeeds(-Kp/3*(RtCs-YtCs),Kp/3*(RtCs-YtCs)) #rotate in place to acquire the goal
-            print("seeking goal")
+            print("centering on goal")
             print("center (px): ", RtCs, "actual (px): ", YtCs)
         elif math.fabs(RtWs-YtdF) > deadzoneWs:
             servos.setSpeedsIPS(-Kp*(RtWs-YtdF),-Kp*(RtWs-YtdF)) #correct distance to the goal
@@ -49,13 +48,13 @@ while True:
         #no else, prevents death!
         servos.setSpeedsVW(-Kp*(4-YtdF),-Kp*(4-YtdL)*math.pi/6)
     elif math.fabs(RtCs-YtCs) > deadzoneCs: #goal is not visible and we are not at an obstacle
-        print("finding goal")
-        servos.setSpeeds(-Kp/3*(RtCs-YtdF),Kp/3*(RtCs-YtCs)) #rotate in place to acquire the goal
+        print("lost the goal or have not seen it yet")
+        servos.setSpeeds(-Kp/3*(RtCs-YtCs),Kp/3*(RtCs-YtCs)) #rotate in place to acquire the goal
     else:
         #enter dead (stuck) state
         print("x-x")
         servos.setSpeeds(0,0)
-    time.sleep(0.05) #don't constantly hit OpenCV
+    time.sleep(0.025) #don't constantly hit OpenCV
 
 #time to shut down
 camera.stop()
