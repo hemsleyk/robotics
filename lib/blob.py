@@ -15,7 +15,6 @@
 import cv2 as cv
 import time
 from lib import ThreadedWebcam
-from lib import UnthreadedWebcam
 
 FPS_SMOOTHING = 0.9
 
@@ -71,16 +70,10 @@ def onMaxVTrackbar(val):
 # Initialize the threaded camera
 # You can run the unthreaded camera instead by changing the line below.
 # Look for any differences in frame rate and latency.
-camera = ThreadedWebcam.ThreadedWebcam() # UnthreadedWebcam()
+ # UnthreadedWebcam()
 
 params = cv.SimpleBlobDetector_Params()
 detector = cv.SimpleBlobDetector_create(params)
-
-def InitCV():
-# Initialize the SimpleBlobDetector
-    camera.start()
-def ShutdownCV():
-    camera.stop()
 
 # Attempt to open a SimpleBlobDetector parameters file if it exists,
 # Otherwise, one will be generated.
@@ -107,7 +100,7 @@ cv.createTrackbar("Max Sat", WINDOW1, maxS, 255, onMaxSTrackbar)
 cv.createTrackbar("Min Val", WINDOW1, minV, 255, onMinVTrackbar)
 cv.createTrackbar("Max Val", WINDOW1, maxV, 255, onMaxVTrackbar)
 
-def DetectPoints():
+def DetectPoints(camera):
     # Get a frame
     frame = camera.read()
     
