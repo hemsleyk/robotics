@@ -53,6 +53,7 @@ while True:
         servos.setSpeeds(-Kp/3*(RtCs-YtdF),Kp/3*(RtCs-YtCs)) #rotate in place to acquire the goal
     else:
         #enter dead (stuck) state
+        print("x-x")
         servos.setSpeeds(0,0)
     time.sleep(0.05) #don't constantly hit OpenCV
 
