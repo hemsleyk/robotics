@@ -19,7 +19,7 @@ def SatSpeeds0to100(speed):
 camera = ThreadedWebcam.ThreadedWebcam()
 camera.start()
 
-Kp = float(input("Value of Kp for prop. control:"))
+Kp = float(input("Value of Kp for prop. control, hint, LOW:"))
 if (servos.FloatEq(Kp,0)): exit()
 
 while True:
