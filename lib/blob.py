@@ -81,7 +81,7 @@ detector = cv.SimpleBlobDetector_create(params)
 # Attempt to open a SimpleBlobDetector parameters file if it exists,
 # Otherwise, one will be generated.
 # These values WILL need to be adjusted for accurate and fast blob detection.
-fs = cv.FileStorage("params.yaml", cv.FILE_STORAGE_READ) #yaml, xml, or json
+fs = cv.FileStorage("lib/params.yaml", cv.FILE_STORAGE_READ) #yaml, xml, or json
 if fs.isOpened():
     detector.read(fs.root())
 else:
