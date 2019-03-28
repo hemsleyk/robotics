@@ -30,7 +30,7 @@ while True:
     if math.fabs(RtCs-YtCs) > deadzoneCs:
         servos.setSpeeds(-Kp/3*(RtCs-YtCs)-Kp*(RtWs-YtWs),Kp/3*(RtCs-YtCs)-Kp*(RtWs-YtWs)) #rotate + move to center goal
     else:
-        servos.setSpeeds(-Kp*(RtWs-YtWs),-Kp*(RtWs-YtWs)) #just worry about distance from goal
+        servos.setSpeedsIPS(-Kp*(RtWs-YtWs),-Kp*(RtWs-YtWs)) #just worry about distance from goal
 
     time.sleep(0.025) #don't constantly hit OpenCV
 
