@@ -6,7 +6,7 @@ minThreshold: 127.
 maxThreshold: 128.
 minRepeatability: 0
 minDistBetweenBlobs: 10.
-filterByColor: 1
+filterByColor: 0
 blobColor: 255
 filterByArea: 1
 minArea: 750.
