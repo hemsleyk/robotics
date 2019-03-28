@@ -45,6 +45,15 @@ def SatSpeeds0to100(speed):
         return max(speed, -100)
     else:
         return 0
+
+def Execute90(dir): #-1 = left, +1 = right
+    encoders.resetCounts()
+    setSpeeds(dir*50,-dir*50)
+    while encoders.getCounts()[0] < 16 and encoders.getCounts()[1] < 16:
+        print("executing 90 degree right turn")
+        time.sleep(0.01)
+    return 0
+
 #range 1.4-1.6, mapped from 1.5 by scaling factor of 0.001
 def setSpeeds(Lspeed,Rspeed):
     Lspeed = SatSpeeds0to100(Lspeed)
