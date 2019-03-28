@@ -28,7 +28,7 @@ while True:
         Yt = goalBlobs[0].pt[0] #store the last known X for proportional control
         print("center: ", Rt, "actual: ", Yt)
         print("applied: ", SatSpeeds0to100(Kp*(Rt-Yt)))
-    servos.setSpeeds(SatSpeeds0to100(Kp*(Rt-Yt)),SatSpeeds0to100(-Kp*(Rt-Yt))) #rotate in place to center goal
+    servos.setSpeeds(SatSpeeds0to100(-Kp*(Rt-Yt)),SatSpeeds0to100(Kp*(Rt-Yt))) #rotate in place to center goal
     time.sleep(0.1) #don't constantly hit OpenCV
 
 #time to shut down
