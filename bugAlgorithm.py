@@ -44,9 +44,9 @@ while True:
         print("wall following")
         if(YtdL*2.54 > 15 and YtdF > 15): #safety margin
             wallFollowing = False
-        elif(math.fabs(YtdF-YtdL) < 1): #in a corner
+        elif(math.fabs(YtdF-YtdL) < 0.5): #in a corner
             servos.Execute90(1) #90 degree right turn
-        else: #following
+        else: #follow
             servos.setSpeedsVW(-Kp*(4-YtdF),-Kp*(4-YtdL)*math.pi/6)
     elif math.fabs(RtCs-YtCs) > deadzoneCs: #goal is not visible and we are not at an obstacle
         print("finding goal")
