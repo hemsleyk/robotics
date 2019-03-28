@@ -1,4 +1,4 @@
-from lib import servos, ThreadedWebcam, blob
+from lib import servos, ThreadedWebcam, blob, time
 goalX = 0.0
 GoalFound = False
 
@@ -18,6 +18,9 @@ while True:
     while goalBlobs: #goal exists
         goalX = goalBlobs[0].pt[0] #store the last known X for proportional control
         print(goalBlobs[0].pt[0])
+        time.sleep(0.1) #don't constantly hit OpenCV
+        goalBlobs = blob.DetectPoints(camera)
+    time.sleep(0.1) #don't constantly hit OpenCV
     FrameGoal() #goal isn't visible
 
 #time to shut down
