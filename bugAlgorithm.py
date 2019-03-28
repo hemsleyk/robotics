@@ -19,6 +19,9 @@ camera.start()
 Kp = float(input("Value of Kp for prop. control,"))
 if (servos.FloatEq(Kp,0)): exit()
 
+print("Calibrating")
+servos.calibrateSpeeds()
+
 while True:
     goalBlobs = blob.DetectPoints(camera) #must be able to see goal from initial point or will never find it?
     YtdF = distance.fSensor.get_distance()/25.4 #convert to inches

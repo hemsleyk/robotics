@@ -49,7 +49,7 @@ def SatSpeeds0to100(speed):
 def Execute90(dir): #-1 = left, +1 = right
     encoders.resetCounts()
     setSpeeds(dir*50,-dir*50)
-    while encoders.getCounts()[0] < 12 and encoders.getCounts()[1] < 12:
+    while encoders.getCounts()[0] < 13 and encoders.getCounts()[1] < 13:
         print("executing 90 degree right turn")
         time.sleep(0.01)
     return 0
