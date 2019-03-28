@@ -3,7 +3,7 @@ from lib import servos, ThreadedWebcam, blob
 
 Yt = 0.0
 Rt = 320.00 #desired centerpoint of goal in camera space
-deadzone = 10 #deadzone of goal center in pixels
+deadzone = 30 #deadzone of goal center in pixels
 
 def InitCV():
 # Initialize the SimpleBlobDetector
