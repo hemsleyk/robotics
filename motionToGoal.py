@@ -3,7 +3,7 @@ from lib import servos, ThreadedWebcam, blob, distance
 
 YtCs = 0.0 #measured x-coordinate of goal in camera space (px)
 RtCs = 320.00 #desired centerpoint of goal in camera space (px)
-deadzoneCs = 10 #deadzone in camera space (px)
+deadzoneCs = 20 #deadzone in camera space (px)
 YtWs = 5.0 #measured distance to goal in world space (inches), set to 5 initially ...
 RtWs = 5.0 #desired distance to goal in world space (inches)
 
