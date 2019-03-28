@@ -1,8 +1,9 @@
-import time
+import time, math
 from lib import servos, ThreadedWebcam, blob, distance
 
 YtCs = 0.0 #measured x-coordinate of goal in camera space (px)
 RtCs = 320.00 #desired centerpoint of goal in camera space (px)
+deadzoneCs = 10 #deadzone in camera space (px)
 YtWs = 5.0 #measured distance to goal in world space (inches), set to 5 initially ...
 RtWs = 5.0 #desired distance to goal in world space (inches)
 
@@ -26,7 +27,11 @@ while True:
             YtWs = 5.0 #disable motion to goal
         print("center (px): ", RtCs, "actual (px): ", YtCs)
         print("applied: ", (Kp/2*(RtCs-YtCs)))
-    servos.setSpeeds(-Kp/2*(RtCs-YtCs)-Kp*(RtWs-YtWs),Kp/2*(RtCs-YtCs)-Kp*(RtWs-YtWs)) #rotate + move to center goal
+    if math.fabs(RtCs-YtCs) > deadzoneCs:
+        servos.setSpeeds(-Kp/3*(RtCs-YtCs)-Kp*(RtWs-YtWs),Kp/3*(RtCs-YtCs)-Kp*(RtWs-YtWs)) #rotate + move to center goal
+    else:
+        servos.setSpeeds(-Kp*(RtWs-YtWs),-Kp*(RtWs-YtWs)) #just worry about distance from goal
+
     time.sleep(0.025) #don't constantly hit OpenCV
 
 #time to shut down
