@@ -2,11 +2,19 @@ import time
 from lib import servos, ThreadedWebcam, blob
 
 Yt = goalX = 0.0
-Rt = 250.00 #desired centerpoint of goal in camera space
+Rt = 320.00 #desired centerpoint of goal in camera space
 
 def InitCV():
 # Initialize the SimpleBlobDetector
     camera.start()
+def SatSpeeds0to100(speed):
+    if speed > 0:
+        return min(speed,100)
+    elif speed < 0:
+        return max(speed, -100)
+    else:
+        return 0
+
 
 camera = ThreadedWebcam.ThreadedWebcam()
 camera.start()
@@ -19,7 +27,7 @@ while True:
     if goalBlobs: #goal is visible, so update the x coordinate
         goalX = goalBlobs[0].pt[0] #store the last known X for proportional control
         print(goalBlobs[0].pt[0])
-    servos.setSpeedsIPS((Kp*(Rt-Yt)),-Kp*(Rt-Yt)) #rotate in place to center goal
+    servos.setSpeeds((Kp*(Rt-Yt)),-Kp*(Rt-Yt)) #rotate in place to center goal
     time.sleep(0.1) #don't constantly hit OpenCV
 
 #time to shut down

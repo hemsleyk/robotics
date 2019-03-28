@@ -14,7 +14,6 @@
 
 import cv2 as cv
 import time
-from lib import ThreadedWebcam
 
 FPS_SMOOTHING = 0.9
 
@@ -115,12 +114,6 @@ def DetectPoints(camera):
     # The results are stored in a vector of 'KeyPoint' objects,
     # which describe the location and size of the blobs.
     keypoints = detector.detect(mask)
-    
-    # For each detected blob, draw a circle on the frame
-    frame_with_keypoints = cv.drawKeypoints(frame, keypoints, None, color = (0, 255, 0), flags = cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-    
-    # Write text onto the frame
-    cv.putText(frame_with_keypoints, "{} blobs".format(len(keypoints)), (5, 35), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0))
 
     #return largest
     return sorted(keypoints, key=lambda keypoint: keypoint.response,reverse=True)
