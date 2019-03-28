@@ -23,12 +23,14 @@ while True:
     if goalBlobs: #goal is visible, so update the x coordinate
         YtCs = goalBlobs[0].pt[0] #store the last known X for proportional control
         YtWs = distance.fSensor.get_distance()/25.4 #measure front sensor
-        print("center (px): ", RtCs, "actual (px): ", YtCs)
-        print("applied: ", (Kp/2*(RtCs-YtCs)))
     if math.fabs(RtCs-YtCs) > deadzoneCs:
         servos.setSpeeds(-Kp/3*(RtCs-YtCs),Kp/3*(RtCs-YtCs)) #rotate in place to acquire the goal
+        print("seeking goal")
+        print("center (px): ", RtCs, "actual (px): ", YtCs)
     elif math.fabs(RtWs-YtWs) > deadzoneWs:
         servos.setSpeedsIPS(-Kp*(RtWs-YtWs),-Kp*(RtWs-YtWs)) #correct distance to the goal
+        print("approaching goal")
+        print("Distance (in): ", RtWs, "actual (in): ", YtWs)
     else: #nowhere to go
         servos.setSpeeds(0,0)
     time.sleep(0.05) #don't constantly hit OpenCV
