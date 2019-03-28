@@ -4,7 +4,7 @@ from lib import servos, ThreadedWebcam, blob, distance
 YtCs = 0.0 #measured x-coordinate of goal in camera space (px)
 RtCs = 320.00 #desired centerpoint of goal in camera space (px)
 deadzoneCs = 30 #deadzone in camera space (px)
-YtWs = 0.0 #measured distance to goal in world space (in)
+YtdF = 0.0 #measured distance to goal in world space (in)
 RtWs = 5.0 #desired distance to goal in world space (in)
 deadzoneWs = 0.1 #deadzone in world space (in)
 wallFollowing = False
@@ -29,15 +29,19 @@ while True:
     
     if goalBlobs and YtdF*2.54 > 10 and wallFollowing is False: #goal is visible, execute motion to goal
         print("motion to goal")
-        print("center (px): ", RtCs, "actual (px): ", YtCs)
         if math.fabs(RtCs-YtCs) > deadzoneCs:
-            servos.setSpeeds(-Kp/3*(RtCs-YtdF),Kp/3*(RtCs-YtCs)) #rotate in place to acquire the goal
-        elif math.fabs(RtWs-YtWs) > deadzoneWs:
-            servos.setSpeedsIPS(-Kp*(RtWs-YtdF),-Kp*(RtWs-YtWs)) #correct distance to the goal
+            servos.setSpeeds(-Kp/3*(RtCs-YtCs),Kp/3*(RtCs-YtCs)) #rotate in place to acquire the goal
+            print("seeking goal")
+            print("center (px): ", RtCs, "actual (px): ", YtCs)
+        elif math.fabs(RtWs-YtdF) > deadzoneWs:
+            servos.setSpeedsIPS(-Kp*(RtWs-YtdF),-Kp*(RtWs-YtdF)) #correct distance to the goal
+            print("approaching goal")
+            print("Distance (in): ", RtWs, "actual (in): ", YtdF)
         else: #nowhere to go
             servos.setSpeeds(0,0)
     elif YtdF*2.54 < 10 or wallFollowing is True: #cast dist to cm, execute wall following
         wallFollowing = True #left turn robot
+        print("wall following")
         if(YtdR*2.54 > 15 and YtdF > 15): #safety margin
             wallFollowing = False
         elif(math.fabs(YtdF-YtdR) < 1): #in a corner
