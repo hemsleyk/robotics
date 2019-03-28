@@ -22,10 +22,7 @@ while True:
     goalBlobs = blob.DetectPoints(camera)
     if goalBlobs: #goal is visible, so update the x coordinate
         YtCs = goalBlobs[0].pt[0] #store the last known X for proportional control
-        if RtCs-YtCs < 75:
-            YtWs = distance.fSensor.get_distance()/25.4 #only measure if we think we are angled towards goal
-        else:
-            YtWs = 5.0 #disable motion to goal
+        YtWs = distance.fSensor.get_distance()/25.4 #measure front sensor
         print("center (px): ", RtCs, "actual (px): ", YtCs)
         print("applied: ", (Kp/2*(RtCs-YtCs)))
     if math.fabs(RtCs-YtCs) > deadzoneCs:
