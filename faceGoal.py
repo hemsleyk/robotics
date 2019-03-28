@@ -1,4 +1,5 @@
-from lib import servos, ThreadedWebcam, blob, time
+import time
+from lib import servos, ThreadedWebcam, blob
 goalX = 0.0
 GoalFound = False
 
