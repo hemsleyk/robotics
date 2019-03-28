@@ -10,8 +10,10 @@ def FrameGoal():
 
 while True:
     goalBlob = blob.DetectPoints()(0)
-    goalX = goalBlob.x
-    while GoalFound: #center the goal, stay stationary, use propcon
-        print("wee")
+    while goalBlob: #goal exists
+        goalX = goalBlob.x #store the last known X for proportional control
+        print(goalBlob.x)
     FrameGoal() #goal isn't visible
+
+#time to shut down
 blob.ShutdownCV()
