@@ -34,8 +34,7 @@ while True:
         servos.setSpeedsIPS(-Kp*(RtWs-YtWs),-Kp*(RtWs-YtWs)) #correct distance to the goal
     else: #nowhere to go
         servos.setSpeeds(0,0)
-
-    time.sleep(0.025) #don't constantly hit OpenCV
+    time.sleep(0.05) #don't constantly hit OpenCV
 
 #time to shut down
 camera.stop()
