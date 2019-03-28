@@ -17,7 +17,7 @@ while True:
     goalBlobs = blob.DetectPoints(camera)
     while goalBlobs: #goal exists
         goalX = goalBlobs[0].x #store the last known X for proportional control
-        print(goalBlobs[0].x)
+        print(goalBlobs[0].pt.x)
     FrameGoal() #goal isn't visible
 
 #time to shut down
