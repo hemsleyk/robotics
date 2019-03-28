@@ -20,9 +20,10 @@ if (servos.FloatEq(Kp,0)): exit()
 
 while True:
     goalBlobs = blob.DetectPoints(camera)
+    YtWs = distance.fSensor.get_distance()/25.4 #measure front sensor
+
     if goalBlobs: #goal is visible, so update the x coordinate
         YtCs = goalBlobs[0].pt[0] #store the last known X for proportional control
-        YtWs = distance.fSensor.get_distance()/25.4 #measure front sensor
     if math.fabs(RtCs-YtCs) > deadzoneCs:
         servos.setSpeeds(-Kp/3*(RtCs-YtCs),Kp/3*(RtCs-YtCs)) #rotate in place to acquire the goal
         print("seeking goal")
