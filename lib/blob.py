@@ -68,16 +68,19 @@ def onMaxVTrackbar(val):
     maxV = max(val, minV + 1)
     cv.setTrackbarPos("Max Val", WINDOW1, maxV)
 
-
 # Initialize the threaded camera
 # You can run the unthreaded camera instead by changing the line below.
 # Look for any differences in frame rate and latency.
 camera = ThreadedWebcam.ThreadedWebcam() # UnthreadedWebcam()
-camera.start()
 
-# Initialize the SimpleBlobDetector
 params = cv.SimpleBlobDetector_Params()
 detector = cv.SimpleBlobDetector_create(params)
+
+def InitCV():
+# Initialize the SimpleBlobDetector
+    camera.start()
+def ShutdownCV():
+    camera.stop()
 
 # Attempt to open a SimpleBlobDetector parameters file if it exists,
 # Otherwise, one will be generated.
@@ -87,11 +90,9 @@ if fs.isOpened():
     detector.read(fs.root())
 else:
     print("WARNING: params file not found! Creating default file.")
-    
     fs2 = cv.FileStorage("params.yaml", cv.FILE_STORAGE_WRITE)
     detector.write(fs2)
     fs2.release()
-    
 fs.release()
 
 # Create windows
@@ -106,13 +107,7 @@ cv.createTrackbar("Max Sat", WINDOW1, maxS, 255, onMaxSTrackbar)
 cv.createTrackbar("Min Val", WINDOW1, minV, 255, onMinVTrackbar)
 cv.createTrackbar("Max Val", WINDOW1, maxV, 255, onMaxVTrackbar)
 
-fps, prev = 0.0, 0.0
-while True:
-    # Calculate FPS
-    now = time.time()
-    fps = (fps*FPS_SMOOTHING + (1/(now - prev))*(1.0 - FPS_SMOOTHING))
-    prev = now
-
+def DetectPoints():
     # Get a frame
     frame = camera.read()
     
@@ -132,17 +127,11 @@ while True:
     frame_with_keypoints = cv.drawKeypoints(frame, keypoints, None, color = (0, 255, 0), flags = cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
     
     # Write text onto the frame
-    cv.putText(frame_with_keypoints, "FPS: {:.1f}".format(fps), (5, 15), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0))
     cv.putText(frame_with_keypoints, "{} blobs".format(len(keypoints)), (5, 35), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0))
     
     # Display the frame
     cv.imshow(WINDOW1, mask)
     cv.imshow(WINDOW2, frame_with_keypoints)
-    
-    # Check for user input
-    c = cv.waitKey(1)
-    if c == 27 or c == ord('q') or c == ord('Q'): # Esc or Q
-        camera.stop()
-        break
 
-camera.stop()
+    #return largest
+    return sorted(keypoints, key=lambda keypoint: keypoint.response,reverse=True)
