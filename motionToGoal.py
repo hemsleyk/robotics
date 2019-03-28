@@ -4,8 +4,9 @@ from lib import servos, ThreadedWebcam, blob, distance
 YtCs = 0.0 #measured x-coordinate of goal in camera space (px)
 RtCs = 320.00 #desired centerpoint of goal in camera space (px)
 deadzoneCs = 20 #deadzone in camera space (px)
-YtWs = 5.0 #measured distance to goal in world space (inches), set to 5 initially ...
-RtWs = 5.0 #desired distance to goal in world space (inches)
+YtWs = 0.0 #measured distance to goal in world space (in)
+RtWs = 5.0 #desired distance to goal in world space (in)
+deadzoneWs = 0.1 #deadzone in world space (in)
 
 def InitCV():
 # Initialize the SimpleBlobDetector
@@ -28,9 +29,11 @@ while True:
         print("center (px): ", RtCs, "actual (px): ", YtCs)
         print("applied: ", (Kp/2*(RtCs-YtCs)))
     if math.fabs(RtCs-YtCs) > deadzoneCs:
-        servos.setSpeeds(-Kp/3*(RtCs-YtCs)-Kp*(RtWs-YtWs),Kp/3*(RtCs-YtCs)-Kp*(RtWs-YtWs)) #rotate + move to center goal
-    else:
-        servos.setSpeedsIPS(-Kp*(RtWs-YtWs),-Kp*(RtWs-YtWs)) #just worry about distance from goal
+        servos.setSpeeds(-Kp/3*(RtCs-YtCs),Kp/3*(RtCs-YtCs)) #rotate in place to acquire the goal
+    elif math.fabs(RtWs-YtWs) > deadzoneWs:
+        servos.setSpeedsIPS(-Kp*(RtWs-YtWs),-Kp*(RtWs-YtWs)) #correct distance to the goal
+    else: #nowhere to go
+        servos.setSpeeds(0,0)
 
     time.sleep(0.025) #don't constantly hit OpenCV
 
