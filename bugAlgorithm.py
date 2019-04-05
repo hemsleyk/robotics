@@ -42,7 +42,7 @@ def SeekGoal(): #either rotate to goal or move to goal
                 if math.fabs(RtWs-YtdF) > deadzoneWs and (YtCsY < 100 or YtCsD <= 200): #need to approach
                     if YtdF*2.54 < 10 and YtCsD < 200: #non-goal wall must be in front.
                         WallFollowing()
-                    else
+                    else:
                         servos.setSpeedsIPS(-Kp*(RtWs-YtdF),-Kp*(RtWs-YtdF)) #correct distance to the goal
                         print("approaching goal")
                         print("Distance (in): ", RtWs, "actual (in): ", YtdF)
