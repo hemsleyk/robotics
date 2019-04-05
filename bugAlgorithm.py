@@ -54,9 +54,9 @@ def WallFollowing():
         ExecCV()
         if(math.fabs(YtdF-YtdL) < 0.5): #in a corner
             servos.Execute90(1) #90 degree right turn
-        elif(YtdF*2.54 > 15 ):
+        elif(YtdF*2.54 > 15 and YtdL*2.54 > 15): #leave the wall
             servos.ExecuteCoast(5.0)
-            break #left the wall
+            break
         elif(YtCsY < 90): break #unobstructed path to goal
         else: #follow the wall
             servos.setSpeedsVW(-Kp*(10-YtdF*2.54),-Kp*(10-YtdL*2.54)*math.pi/6)
