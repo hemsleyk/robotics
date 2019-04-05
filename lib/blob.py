@@ -17,54 +17,11 @@ import time
 
 FPS_SMOOTHING = 0.9
 
-# Window names
-WINDOW1 = "Adjustable Mask - Press Esc to quit"
-WINDOW2 = "Detected Blobs - Press Esc to quit"
-
 # Default HSV ranges
 # Not anymore! Specified for hot pink!
 # Note: the range for hue is 0-180, not 0-255
 minH =   160; minS = 77; minV = 77
 maxH = 180; maxS = 255; maxV = 255
-
-
-# These functions are called when the user moves a trackbar
-def onMinHTrackbar(val):
-    # Calculate a valid minimum red value and re-set the trackbar.
-    global minH
-    global maxH
-    minH = min(val, maxH - 1)
-    cv.setTrackbarPos("Min Hue", WINDOW1, minH)
-
-def onMinSTrackbar(val):
-    global minS
-    global maxS
-    minS = min(val, maxS - 1)
-    cv.setTrackbarPos("Min Sat", WINDOW1, minS)
-
-def onMinVTrackbar(val):
-    global minV
-    global maxV
-    minV = min(val, maxV - 1)
-    cv.setTrackbarPos("Min Val", WINDOW1, minV)
-
-def onMaxHTrackbar(val):
-    global minH
-    global maxH
-    maxH = max(val, minH + 1)
-    cv.setTrackbarPos("Max Hue", WINDOW1, maxH)
-
-def onMaxSTrackbar(val):
-    global minS
-    global maxS
-    maxS = max(val, minS + 1)
-    cv.setTrackbarPos("Max Sat", WINDOW1, maxS)
-
-def onMaxVTrackbar(val):
-    global minV
-    global maxV
-    maxV = max(val, minV + 1)
-    cv.setTrackbarPos("Max Val", WINDOW1, maxV)
 
 # Initialize the threaded camera
 # You can run the unthreaded camera instead by changing the line below.
@@ -88,16 +45,6 @@ else:
 fs.release()
 
 # Create windows
-cv.namedWindow(WINDOW1)
-cv.namedWindow(WINDOW2)
-
-# Create trackbars
-cv.createTrackbar("Min Hue", WINDOW1, minH, 180, onMinHTrackbar)
-cv.createTrackbar("Max Hue", WINDOW1, maxH, 180, onMaxHTrackbar)
-cv.createTrackbar("Min Sat", WINDOW1, minS, 255, onMinSTrackbar)
-cv.createTrackbar("Max Sat", WINDOW1, maxS, 255, onMaxSTrackbar)
-cv.createTrackbar("Min Val", WINDOW1, minV, 255, onMinVTrackbar)
-cv.createTrackbar("Max Val", WINDOW1, maxV, 255, onMaxVTrackbar)
 
 def DetectPoints(camera):
     # Get a frame

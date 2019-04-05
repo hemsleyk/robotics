@@ -3,6 +3,7 @@ from lib import servos, ThreadedWebcam, blob, distance
 
 YtCsX = 0.0 #measured x-coordinate of goal in camera space (px)
 YtCsY = 480 #measured y-coordinate of goal in camera space (px)
+YtCsD = 0.0 #measured diameter of goal (px)
 RtCs = 320.00 #desired centerpoint of goal in camera space (px)
 deadzoneCs = 30 #deadzone in camera space (px)
 YtdF = 5.0 #measured distance to goal in world space (in)
@@ -12,7 +13,7 @@ YtdR = 5.0 #measured distance of right sensor
 deadzoneWs = 0.1 #deadzone in world space (in)
 
 def ExecCV():
-    global YtdF, YtdL, YtdR, YtCsX, YtCsY
+    global YtdF, YtdL, YtdR, YtCsX, YtCsY, YtCsD
     goalBlobs = blob.DetectPoints(camera) #must be able to see goal from initial point or will never find it?
     YtdF = distance.fSensor.get_distance()/25.4 #convert to inches
     YtdR = distance.rSensor.get_distance()/25.4 #convert to inches
@@ -21,6 +22,7 @@ def ExecCV():
     if goalBlobs: #goal is visible, execute motion to goal
         YtCsX = goalBlobs[0].pt[0] #store the last known X for proportional control
         YtCsY = goalBlobs[0].pt[1] #store the last known Y for wall vs goal determination
+        YtCsD = goalBlobs[0].size
         return goalBlobs
 
 def SeekGoal(): #either rotate to goal or move to goal
@@ -31,17 +33,19 @@ def SeekGoal(): #either rotate to goal or move to goal
             print("centering on goal")
             print("center (px): ", RtCs, "actual (px): ", YtCsX)
             print("height (px): ", YtCsY)
+            print("diameter (px): ", YtCsY)
             time.sleep(0.025)
-        elif (YtdF*2.54 < 10 or YtdL*2.54 < 10) and YtCsY > 300:
+        elif (YtdF*2.54 < 10 or YtdL*2.54 < 10) and YtCsY > 90:
             WallFollowing() #allow wall following before goal is obtained
         else:
             while(ExecCV()): #as long as we can see goal
-                if math.fabs(RtWs-YtdF) > deadzoneWs and YtCsY < 90: #need to approach
+                if math.fabs(RtWs-YtdF) > deadzoneWs and (YtCsY < 90 or YtCsD >= 100): #need to approach
                     servos.setSpeedsIPS(-Kp*(RtWs-YtdF),-Kp*(RtWs-YtdF)) #correct distance to the goal
                     print("approaching goal")
                     print("Distance (in): ", RtWs, "actual (in): ", YtdF)
                     print("height (px): ", YtCsY)
-                elif YtdF*2.54 < 10 and YtCsY >= 90: #non-goal wall detected in front.
+                    print("diameter (px): ", YtCsY)
+                elif YtdF*2.54 < 10 and (YtCsY >= 90 or YtCsD < 100): #non-goal wall detected in front.
                     WallFollowing()
                 else: #must be at goal
                     servos.setSpeeds(0,0)
@@ -49,16 +53,17 @@ def SeekGoal(): #either rotate to goal or move to goal
     return 0
 
 def WallFollowing():
-    print("wall following")
+    print("wall handling")
     while(True):
         ExecCV()
         if(math.fabs(YtdF-YtdL) < 0.5): #in a corner
             servos.Execute90(1) #90 degree right turn
-        elif(YtdF*2.54 > 15 and YtdL*2.54 > 15): #leave the wall
+        elif(YtdF*2.54 > 15 and YtdL*2.54 > 15): #fell of wall, get some distance.
             servos.ExecuteCoast(5.0)
             break
         elif(YtCsY < 90): break #unobstructed path to goal
         else: #follow the wall
+            print("wall handling")
             servos.setSpeedsVW(-Kp*(10-YtdF*2.54),-Kp*(10-YtdL*2.54)*math.pi/6)
         time.sleep(0.05)
     
