@@ -45,7 +45,7 @@ def SeekGoal(): #either rotate to goal or move to goal
                     print("Distance (in): ", RtWs, "actual (in): ", YtdF)
                     print("height (px): ", YtCsY)
                     print("diameter (px): ", YtCsD)
-                elif YtdF*2.54 < 10: #non-goal wall must be in front.
+                elif YtdF*2.54 < 10 and YtCsD < 175: #non-goal wall must be in front.
                     WallFollowing()
                 else: #must be at goal
                     print("at the goal")
@@ -62,7 +62,7 @@ def WallFollowing():
         ExecCV()
         if(math.fabs(YtdF-YtdL) < 0.5): #in a corner
             servos.Execute90(1) #90 degree right turn
-        elif(YtdF*2.54 > 15 and YtdL*2.54 > 15): #fell off wall, get some distance.
+        elif(YtdF*2.54 > 20 and YtdL*2.54 > 20): #fell off wall, get some distance.
             servos.ExecuteCoast(4.0)
             break  #free to locate goal again.
         elif(YtCsY < 100 or YtCsD > 150):
