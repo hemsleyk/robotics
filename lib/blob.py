@@ -24,8 +24,8 @@ WINDOW2 = "Detected Blobs - Press Esc to quit"
 # Default HSV ranges
 # Not anymore! Specified for hot pink!
 # Note: the range for hue is 0-180, not 0-255
-minH =   0; minS = 127; minV = 32
-maxH = 31; maxS = 255; maxV = 127
+minH =   160; minS = 77; minV = 77
+maxH = 180; maxS = 255; maxV = 255
 
 
 # These functions are called when the user moves a trackbar
