@@ -24,22 +24,26 @@ def ExecCV():
         return goalBlobs
 
 def SeekGoal(): #either rotate to goal or move to goal
-    print("motion to goal")
-    while(ExecCV()): #as long as we can see goal
+    while(True):
+        ExecCV()
         if math.fabs(RtCs-YtCsX) > deadzoneCs: #need to rotate
             servos.setSpeeds(-Kp/3*(RtCs-YtCsX),Kp/3*(RtCs-YtCsX)) #rotate in place to acquire the goal
             print("centering on goal")
             print("center (px): ", RtCs, "actual (px): ", YtCsX)
             print("height (px): ", YtCsY)
-        elif math.fabs(RtWs-YtdF) > deadzoneWs and YtCsY < 300: #need to approach
-            servos.setSpeedsIPS(-Kp*(RtWs-YtdF),-Kp*(RtWs-YtdF)) #correct distance to the goal
-            print("approaching goal")
-            print("Distance (in): ", RtWs, "actual (in): ", YtdF)
-            print("height (px): ", YtCsY)
-        elif YtdF*2.54 < 10 and YtCsY > 300: #non-goal wall detected in front.
-            WallFollowing()
-        else: #nowhere to go
-            servos.setSpeeds(0,0)
+            time.sleep(0.025)
+        else:
+            while(ExecCV()): #as long as we can see goal
+                if math.fabs(RtWs-YtdF) > deadzoneWs and YtCsY < 300: #need to approach
+                    servos.setSpeedsIPS(-Kp*(RtWs-YtdF),-Kp*(RtWs-YtdF)) #correct distance to the goal
+                    print("approaching goal")
+                    print("Distance (in): ", RtWs, "actual (in): ", YtdF)
+                    print("height (px): ", YtCsY)
+                elif YtdF*2.54 < 10 and YtCsY > 300: #non-goal wall detected in front.
+                    WallFollowing()
+                else: #must be at goal
+                    servos.setSpeeds(0,0)
+            time.sleep(0.025)
     return 0
 
 def WallFollowing():
