@@ -64,7 +64,7 @@ if (servos.FloatEq(Kp,0)): exit()
 print("Calibrating")
 servos.calibrateSpeeds()
 
-SeekGoal
+SeekGoal()
 
 #time to shut down
 camera.stop()
