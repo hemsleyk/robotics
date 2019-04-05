@@ -72,8 +72,8 @@ def WallFollowing():
             break #unobstructed path to goal
         else: #follow the wall
             print("wall following")
-            print("V ", -Kp*(10-YtdF*2.54), "W", -Kp*(10-YtdL*2.54)*math.pi/6)
-            servos.setSpeedsVW(-Kp*(10-YtdF*2.54),-Kp*(10-YtdL*2.54)*math.pi/6)
+            print("V ", -Kp*(10-YtdF*2.54), "W", -Kp*(10-YtdL*2.54)*math.pi/4)
+            servos.setSpeedsVW(-Kp*(10-YtdF*2.54),-Kp*(10-YtdL*2.54)*math.pi/4)
         time.sleep(0.05)
     
 
