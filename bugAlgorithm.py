@@ -48,9 +48,13 @@ def SeekGoal(): #either rotate to goal or move to goal
                 elif YtdF*2.54 < 10 and (YtCsY >= 90 or YtCsD < 100): #non-goal wall detected in front.
                     WallFollowing()
                 else: #must be at goal
+                    print("at the goal")
+                    print("Distance (in): ", RtWs, "actual (in): ", YtdF)
+                    print("height (px): ", YtCsY) #typical ~200
+                    print("diameter (px): ", YtCsY) #typical ~200-225
                     servos.setSpeeds(0,0)
             time.sleep(0.025)
-    return 0
+    return 1
 
 def WallFollowing():
     print("wall handling")
@@ -58,12 +62,14 @@ def WallFollowing():
         ExecCV()
         if(math.fabs(YtdF-YtdL) < 0.5): #in a corner
             servos.Execute90(1) #90 degree right turn
-        elif(YtdF*2.54 > 15 and YtdL*2.54 > 15): #fell of wall, get some distance.
-            servos.ExecuteCoast(5.0)
-            break
-        elif(YtCsY < 90): break #unobstructed path to goal
+        elif(YtdF*2.54 > 15 and YtdL*2.54 > 15): #fell off wall, get some distance.
+            servos.ExecuteCoast(4.0)
+            break  #free to locate goal again.
+        elif(YtCsY < 90 or YtCsD > 150):
+            break #unobstructed path to goal
         else: #follow the wall
-            print("wall handling")
+            print("wall following")
+            print("V ", -Kp*(10-YtdF*2.54), "W", -Kp*(10-YtdL*2.54)*math.pi/6)
             servos.setSpeedsVW(-Kp*(10-YtdF*2.54),-Kp*(10-YtdL*2.54)*math.pi/6)
         time.sleep(0.05)
     
