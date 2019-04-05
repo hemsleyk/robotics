@@ -39,13 +39,13 @@ def SeekGoal(): #either rotate to goal or move to goal
             WallFollowing() #allow wall following before goal is obtained
         else:
             while(ExecCV()): #as long as we can see goal
-                if math.fabs(RtWs-YtdF) > deadzoneWs and (YtCsY < 90 or YtCsD >= 100): #need to approach
+                if math.fabs(RtWs-YtdF) > deadzoneWs and (YtCsY < 100 or YtCsD <= 150): #need to approach
                     servos.setSpeedsIPS(-Kp*(RtWs-YtdF),-Kp*(RtWs-YtdF)) #correct distance to the goal
                     print("approaching goal")
                     print("Distance (in): ", RtWs, "actual (in): ", YtdF)
                     print("height (px): ", YtCsY)
                     print("diameter (px): ", YtCsD)
-                elif YtdF*2.54 < 10 and (YtCsY >= 90 or YtCsD < 100): #non-goal wall detected in front.
+                elif YtdF*2.54 < 10: #non-goal wall must be in front.
                     WallFollowing()
                 else: #must be at goal
                     print("at the goal")
