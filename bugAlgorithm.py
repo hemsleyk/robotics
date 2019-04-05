@@ -11,6 +11,7 @@ RtWs = 2.5 #desired distance to goal in world space (in)
 YtdL = 5.0 #measured distance of left sensor
 YtdR = 5.0 #measured distance of right sensor
 deadzoneWs = 0.1 #deadzone in world space (in)
+satisfiedCsD = 210
 
 def ExecCV():
     global YtdF, YtdL, YtdR, YtCsX, YtCsY, YtCsD
@@ -39,8 +40,8 @@ def SeekGoal(): #either rotate to goal or move to goal
             WallFollowing() #allow wall following before goal is obtained
         else:
             while(ExecCV()): #as long as we can see goal
-                if math.fabs(RtWs-YtdF) > deadzoneWs and (YtCsY < 100 or YtCsD <= 200): #need to approach
-                    if YtdF*2.54 < 10 and YtCsD < 200: #non-goal wall must be in front.
+                if math.fabs(RtWs-YtdF) > deadzoneWs and (YtCsY < 100 or YtCsD <= 225): #need to approach
+                    if YtdF*2.54 < 10 and YtCsD < satisfiedCsD: #non-goal wall must be in front.
                         WallFollowing()
                     else:
                         servos.setSpeedsIPS(-Kp*(RtWs-YtdF),-Kp*(RtWs-YtdF)) #correct distance to the goal
@@ -48,13 +49,11 @@ def SeekGoal(): #either rotate to goal or move to goal
                         print("Distance (in): ", RtWs, "actual (in): ", YtdF)
                         print("height (px): ", YtCsY)
                         print("diameter (px): ", YtCsD)
-                elif YtdF*2.54 < 10 and YtCsD < 200:
-                    WallFollowing() #safety catch
                 else: #must be at goal
                     print("at the goal")
                     print("Distance (in): ", RtWs, "actual (in): ", YtdF)
                     print("height (px): ", YtCsY) #typical ~200
-                    print("diameter (px): ", YtCsD) #typical ~200-225
+                    print("diameter (px): ", YtCsD) #typical ~-225
                     servos.setSpeeds(0,0)
                 time.sleep(0.01)
     return 1
@@ -68,7 +67,7 @@ def WallFollowing():
         elif(YtdF*2.54 > 20 and YtdL*2.54 > 20): #fell off wall
             servos.ExecuteCoast(4.0) #get some distance
             break  #free to locate goal again.
-        elif(YtCsY < 125 or YtCsD > 175):
+        elif(YtCsY < 125 or YtCsD > satisfiedCsD):
             print ("saw clear path to goal")
             break #unobstructed path to goal
         else: #follow the wall
