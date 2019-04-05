@@ -6,7 +6,7 @@ YtCsY = 0.0 #measured y-coordinate of goal in camera space (px)
 RtCs = 320.00 #desired centerpoint of goal in camera space (px)
 deadzoneCs = 30 #deadzone in camera space (px)
 YtdF = 5.0 #measured distance to goal in world space (in)
-RtWs = 5.0 #desired distance to goal in world space (in)
+RtWs = 2.5 #desired distance to goal in world space (in)
 YtdL = 5.0 #measured distance of left sensor
 YtdR = 5.0 #measured distance of right sensor
 deadzoneWs = 0.1 #deadzone in world space (in)
@@ -26,12 +26,14 @@ def ExecCV():
 def SeekGoal(): #either rotate to goal or move to goal
     while(True):
         ExecCV()
-        if math.fabs(RtCs-YtCsX) > deadzoneCs: #need to rotate
+        if math.fabs(RtCs-YtCsX) > deadzoneCs and YtdF*2.54 > 10 and YtdL*2.54 > 10: #free of any walls
             servos.setSpeeds(-Kp/3*(RtCs-YtCsX),Kp/3*(RtCs-YtCsX)) #rotate in place to acquire the goal
             print("centering on goal")
             print("center (px): ", RtCs, "actual (px): ", YtCsX)
             print("height (px): ", YtCsY)
             time.sleep(0.025)
+        elif YtdF*2.54 < 10 or YtdL*2.54 < 10:
+            WallFollowing() 
         else:
             while(ExecCV()): #as long as we can see goal
                 if math.fabs(RtWs-YtdF) > deadzoneWs and YtCsY < 300: #need to approach
