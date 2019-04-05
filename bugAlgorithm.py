@@ -65,7 +65,7 @@ def WallFollowing():
         elif(YtdF*2.54 > 15 and YtdL*2.54 > 15): #fell off wall, get some distance.
             servos.ExecuteCoast(4.0)
             break  #free to locate goal again.
-        elif(YtCsY < 90 or YtCsD > 150):
+        elif(YtCsY < 100 or YtCsD > 150):
             break #unobstructed path to goal
         else: #follow the wall
             print("wall following")
