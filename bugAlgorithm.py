@@ -32,8 +32,8 @@ def SeekGoal(): #either rotate to goal or move to goal
             print("center (px): ", RtCs, "actual (px): ", YtCsX)
             print("height (px): ", YtCsY)
             time.sleep(0.025)
-        elif YtdF*2.54 < 10 or YtdL*2.54 < 10:
-            WallFollowing() 
+        elif (YtdF*2.54 < 10 or YtdL*2.54 < 10) and YtCsY > 300:
+            WallFollowing() #allow wall following before goal is obtained
         else:
             while(ExecCV()): #as long as we can see goal
                 if math.fabs(RtWs-YtdF) > deadzoneWs and YtCsY < 300: #need to approach
