@@ -46,11 +46,18 @@ def SatSpeeds0to100(speed):
     else:
         return 0
 
+def ExecuteCoast(inches): #continue current vector for certain amount of inches
+    print("Coasting for ", inches, " inches")
+    encoders.resetCounts()
+    while encoders.getCounts()[0] < inches*IN_PER_TICK and encoders.getCounts()[1] < inches*IN_PER_TICK:
+        time.sleep(0.01)
+    return 0
+
 def Execute90(dir): #-1 = left, +1 = right
+    print("executing 90 degree right turn")
     encoders.resetCounts()
     setSpeeds(dir*50,-dir*50)
     while encoders.getCounts()[0] < 13 and encoders.getCounts()[1] < 13:
-        print("executing 90 degree right turn")
         time.sleep(0.01)
     return 0
 
