@@ -34,7 +34,7 @@ def SeekGoal(): #either rotate to goal or move to goal
             print("center (px): ", RtCs, "actual (px): ", YtCsX)
             print("height (px): ", YtCsY)
             print("diameter (px): ", YtCsD)
-            time.sleep(0.025)
+            time.sleep(0.01)
         elif (YtdF*2.54 < 10 or YtdL*2.54 < 10) and YtCsY > 90:
             WallFollowing() #allow wall following before goal is obtained
         else:
@@ -53,7 +53,7 @@ def SeekGoal(): #either rotate to goal or move to goal
                     print("height (px): ", YtCsY) #typical ~200
                     print("diameter (px): ", YtCsD) #typical ~200-225
                     servos.setSpeeds(0,0)
-            time.sleep(0.025)
+                time.sleep(0.01)
     return 1
 
 def WallFollowing():
