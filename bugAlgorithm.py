@@ -12,7 +12,7 @@ YtdR = 5.0 #measured distance of right sensor
 deadzoneWs = 0.1 #deadzone in world space (in)
 
 def ExecCV():
-    global YtdF, YtdL, YtdR, YtCsX
+    global YtdF, YtdL, YtdR, YtCsX, YtCsY
     goalBlobs = blob.DetectPoints(camera) #must be able to see goal from initial point or will never find it?
     YtdF = distance.fSensor.get_distance()/25.4 #convert to inches
     YtdR = distance.rSensor.get_distance()/25.4 #convert to inches
@@ -20,6 +20,7 @@ def ExecCV():
     
     if goalBlobs: #goal is visible, execute motion to goal
         YtCsX = goalBlobs[0].pt[0] #store the last known X for proportional control
+        YtCsY = goalBlobs[0].pt[1] #store the last known Y for wall vs goal determination
         return goalBlobs
 
 def SeekGoal(): #either rotate to goal or move to goal
@@ -29,10 +30,12 @@ def SeekGoal(): #either rotate to goal or move to goal
             servos.setSpeeds(-Kp/3*(RtCs-YtCsX),Kp/3*(RtCs-YtCsX)) #rotate in place to acquire the goal
             print("centering on goal")
             print("center (px): ", RtCs, "actual (px): ", YtCsX)
+            print("height (px): ", YtCsY)
         elif math.fabs(RtWs-YtdF) > deadzoneWs and YtCsY < 300: #need to approach
             servos.setSpeedsIPS(-Kp*(RtWs-YtdF),-Kp*(RtWs-YtdF)) #correct distance to the goal
             print("approaching goal")
             print("Distance (in): ", RtWs, "actual (in): ", YtdF)
+            print("height (px): ", YtCsY)
         elif YtdF*2.54 < 10 and YtCsY > 300: #non-goal wall detected in front.
             WallFollowing()
         else: #nowhere to go
@@ -40,14 +43,14 @@ def SeekGoal(): #either rotate to goal or move to goal
     return 0
 
 def WallFollowing():
-    ExecCV()
     print("wall following")
     while(True):
+        ExecCV()
         if(math.fabs(YtdF-YtdL) < 0.5): #in a corner
             servos.Execute90(1) #90 degree right turn
-        elif(YtdF*2.54 > 15 ):
-            break
-        else:
+        elif(YtdF*2.54 > 15 ): break #left the wall
+        elif(YtCsY < 300): break #unobstructed path to goal
+        else: #follow the wall
             servos.setSpeedsVW(-Kp*(10-YtdF*2.54),-Kp*(10-YtdL*2.54)*math.pi/6)
         time.sleep(0.05)
     
@@ -61,12 +64,7 @@ if (servos.FloatEq(Kp,0)): exit()
 print("Calibrating")
 servos.calibrateSpeeds()
 
-while True:
-    if YtdF*2.54 < 10:
-        WallFollowing()
-    else:
-        SeekGoal()
-    time.sleep(0.025) #don't constantly hit OpenCV
+SeekGoal
 
 #time to shut down
 camera.stop()
