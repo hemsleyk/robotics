@@ -27,11 +27,11 @@ measuredRPSleft = list(())
 # Need to remove this in production most likely.
 def ctrlC(signum, frame):
     print("Exiting")
-    
+
     # Stop the servos
     pwm.set_pwm(LSERVO, 0, 0)
     pwm.set_pwm(RSERVO, 0, 0)
-    
+
     exit()
 
 #hack to test if floats are equal
@@ -57,7 +57,7 @@ def Execute90(dir): #-1 = left, +1 = right
     print("executing 90 degree right turn")
     encoders.resetCounts()
     setSpeeds(dir*50,-dir*50)
-    while encoders.getCounts()[0] < 13 and encoders.getCounts()[1] < 13:
+    while encoders.getCounts()[0] < 7 and encoders.getCounts()[1] < 7:
         time.sleep(0.01)
     return 0
 
@@ -94,12 +94,12 @@ def calibrateSpeeds():
     encoders.resetCounts()
     setSpeeds(0,100)
     time.sleep(1)
-    
+
     start = time.monotonic()
     while(start+10>time.monotonic()):
         measuredRPSright.append(encoders.getSpeeds()[1])
         time.sleep(0.03)
-    
+
     start = time.monotonic()
     setSpeeds(0,0)
     time.sleep(0.03)
@@ -120,24 +120,24 @@ def calibrateSpeeds():
         time.sleep(0.03)
 
     setSpeeds(0,0)
-    
+
     R_S_MAX = (sum(measuredRPSleft)/len(measuredRPSleft)+sum(measuredRPSright)/len(measuredRPSright))/2
 
-    
+
 
 
 
 # Attach the Ctrl+C signal interrupt
 # Need to remove this in production most likely.
 signal.signal(signal.SIGINT, ctrlC)
-    
+
 # Initialize the servo hat library.
 # 50Hz is used for the frequency of the servos.
 pwm = Adafruit_PCA9685.PCA9685()
 pwm.set_pwm_freq(50)
 
 # Write an initial value of 1.5, which keeps the servos stopped.
-# Due to how servos work, and the design of the Adafruit library, 
+# Due to how servos work, and the design of the Adafruit library,
 # the value must be divided by 20 and multiplied by 4096.
 pwm.set_pwm(LSERVO, 0, math.floor(1.5 / 20 * 4096))
 pwm.set_pwm(RSERVO, 0, math.floor(1.5 / 20 * 4096))

@@ -1,6 +1,6 @@
-# This program demonstrates advanced usage of the OpenCV library by 
+# This program demonstrates advanced usage of the OpenCV library by
 # using the SimpleBlobDetector feature along with camera threading.
-# The program displays two windows: one for adjusting the mask, 
+# The program displays two windows: one for adjusting the mask,
 # and one that displays the detected blobs in the (masked) image.
 # Adjust the HSV values until blobs are detected from the camera feed.
 # There's also a params file in the same folder that can be adjusted.
@@ -20,7 +20,7 @@ FPS_SMOOTHING = 0.9
 # Default HSV ranges
 # Not anymore! Specified for hot pink!
 # Note: the range for hue is 0-180, not 0-255
-minH =   160; minS = 77; minV = 77
+minH =   170; minS = 77; minV = 105
 maxH = 180; maxS = 255; maxV = 255
 
 # Initialize the threaded camera
@@ -49,14 +49,14 @@ fs.release()
 def DetectPoints(camera):
     # Get a frame
     frame = camera.read()
-    
-    # Blob detection works better in the HSV color space 
+
+    # Blob detection works better in the HSV color space
     # (than the RGB color space) so the frame is converted to HSV.
     frame_hsv = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
-    
+
     # Create a mask using the given HSV range
     mask = cv.inRange(frame_hsv, (minH, minS, minV), (maxH, maxS, maxV))
-    
+
     # Run the SimpleBlobDetector on the mask.
     # The results are stored in a vector of 'KeyPoint' objects,
     # which describe the location and size of the blobs.
