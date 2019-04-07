@@ -30,7 +30,11 @@ def SeekGoal(): #either rotate to goal or move to goal
     while(True):
         ExecCV()
         if math.fabs(RtCs-YtCsX) > deadzoneCs and YtdF*2.54 > 10 and YtdL*2.54 > 10: #free of any walls
-            servos.setSpeeds(-max(0.2, Kp/2*(RtCs-YtCsX)),max(0.2, Kp/2*(RtCs-YtCsX))) #rotate in place to acquire the goal
+            appliedChange = Kp/2*(RtCs-YtCsX)
+            if appliedChange < 0: #need minimum
+                servos.setSpeeds(-min(-0.2, appliedChange)),min(-0.2, appliedChange))) #rotate in place to acquire the goal
+            else
+                servos.setSpeeds(-max(0.2, appliedChange),max(0.2, appliedChange))) #rotate in place to acquire the goal
             print("centering on goal")
             print("center (px): ", RtCs, "actual (px): ", YtCsX)
             print("height (px): ", YtCsY)
@@ -45,7 +49,8 @@ def SeekGoal(): #either rotate to goal or move to goal
                     if YtdF*2.54 < 12.5 and (YtCsD < satisfiedCsD or YtCsY > 65): #non-goal wall must be in front.
                         WallFollowing()
                     else:
-                        servos.setSpeedsIPS(-Kp*(RtWs-YtdF),-Kp*(RtWs-YtdF)) #correct distance to the goal
+                        appliedChange = -Kp*(RtWs-YtdF)
+                        servos.setSpeedsIPS(appliedChange),appliedChange)) #correct distance to the goal
                         print("approaching goal")
                         print("Distance (in): ", RtWs, "actual (in): ", YtdF)
                         print("height (px): ", YtCsY)
