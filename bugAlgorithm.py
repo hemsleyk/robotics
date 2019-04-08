@@ -5,7 +5,7 @@ YtCsX = 0.0 #measured x-coordinate of goal in camera space (px)
 YtCsY = 480 #measured y-coordinate of goal in camera space (px)
 YtCsD = 0.0 #measured diameter of goal (px)
 RtCs = 320.00 #desired centerpoint of goal in camera space (px)
-deadzoneCs = 30 #deadzone in camera space (px)
+deadzoneCs = 42 #deadzone in camera space (px)
 YtdF = 5.0 #measured distance to goal in world space (in)
 RtWs = 2.5 #desired distance to goal in world space (in)
 YtdL = 5.0 #measured distance of left sensor
@@ -32,9 +32,9 @@ def SeekGoal(): #either rotate to goal or move to goal
         if math.fabs(RtCs-YtCsX) > deadzoneCs and YtdF*2.54 > 10 and YtdL*2.54 > 10: #free of any walls
             appliedChange = Kp/4*(RtCs-YtCsX)
             if appliedChange < 0: #need minimum
-                appliedChange = min(appliedChange, -15)
+                appliedChange = min(appliedChange, -20)
             else:
-                appliedChange = max(appliedChange, 15)
+                appliedChange = max(appliedChange, 20)
             servos.setSpeeds(-appliedChange,appliedChange)
             print("centering on goal")
             print("center (px): ", RtCs, "actual (px): ", YtCsX)
@@ -47,7 +47,7 @@ def SeekGoal(): #either rotate to goal or move to goal
         else:
             while(ExecCV()): #as long as we can see goal
                 if math.fabs(RtWs-YtdF) > deadzoneWs and (YtCsY < 100 or YtCsD <= satisfiedCsD): #need to approach
-                    if YtdF*2.54 < 12.5 and (YtCsD < satisfiedCsD or YtCsY > 100): #non-goal wall must be in front.
+                    if YtdF*2.54 < 12.5 and (YtCsD < satisfiedCsD or YtCsY > 125): #non-goal wall must be in front.
                         WallFollowing()
                     else:
                         appliedChange = -Kp*(RtWs-YtdF)
@@ -74,7 +74,7 @@ def WallFollowing():
             YtCsX = 0.0 #assume we turned right away from goal
             servos.Execute90(1) #90 degree right turn
         elif(YtdF*2.54 > 20 and YtdL*2.54 > 20): #fell off wall
-            servos.ExecuteCoast(4.0) #get some distance
+            servos.ExecuteCoast(5.0) #get some distance
             break  #free to locate goal again.
         #elif (YtCsY < 85 or YtCsD > satisfiedCsD) and (YtdL*2.54 > 20 and YtdF*2.54 > 20):
         #    print ("saw clear path to goal")
