@@ -32,9 +32,9 @@ def SeekGoal(): #either rotate to goal or move to goal
         if math.fabs(RtCs-YtCsX) > deadzoneCs and YtdF*2.54 > 10 and YtdL*2.54 > 10: #free of any walls
             appliedChange = Kp/2*(RtCs-YtCsX)
             if appliedChange < 0: #need minimum
-                servos.setSpeeds(-min(-0.2, appliedChange)),min(-0.2, appliedChange))) #rotate in place to acquire the goal
+                servos.setSpeeds(-min(-20, appliedChange)),min(-20, appliedChange))) #rotate in place to acquire the goal
             else
-                servos.setSpeeds(-max(0.2, appliedChange),max(0.2, appliedChange))) #rotate in place to acquire the goal
+                servos.setSpeeds(-max(20, appliedChange),max(20, appliedChange))) #rotate in place to acquire the goal
             print("centering on goal")
             print("center (px): ", RtCs, "actual (px): ", YtCsX)
             print("height (px): ", YtCsY)
