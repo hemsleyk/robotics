@@ -93,7 +93,7 @@ Kp = float(input("Value of Kp for prop. control,"))
 if (servos.FloatEq(Kp,0)): exit()
 
 print("Calibrating")
-servos.calibrateSpeeds()
+#servos.calibrateSpeeds()
 
 SeekGoal()
 
