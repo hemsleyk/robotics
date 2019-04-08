@@ -11,7 +11,7 @@ RtWs = 2.5 #desired distance to goal in world space (in)
 YtdL = 5.0 #measured distance of left sensor
 YtdR = 5.0 #measured distance of right sensor
 deadzoneWs = 0.15 #deadzone in world space (in)
-satisfiedCsD = 200
+satisfiedCsD = 250
 
 def ExecCV():
     global YtdF, YtdL, YtdR, YtCsX, YtCsY, YtCsD
