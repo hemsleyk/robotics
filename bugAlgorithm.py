@@ -82,6 +82,7 @@ def WallFollowing():
             print("V ", -Kp*(10-YtdF*2.54), "W", -Kp*(10-YtdL*2.54)*math.pi/4)
             servos.setSpeedsVW(-Kp*(10-YtdF*2.54),-Kp*(10-YtdL*2.54)*math.pi/4)
         time.sleep(0.05)
+    return 0
 
 
 camera = ThreadedWebcam.ThreadedWebcam()

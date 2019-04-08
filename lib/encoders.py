@@ -30,8 +30,8 @@ def resetCounts():
 def getCounts():
     global lCount
     global rCount
-    print("L:",lCount)
-    print("R:",rCount)
+    #print("L:",lCount)
+    #print("R:",rCount)
     return lCount,rCount
 
 
