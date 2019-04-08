@@ -5,11 +5,11 @@ thresholdStep: 10.
 minThreshold: 50.
 maxThreshold: 220.
 minRepeatability: 2
-minDistBetweenBlobs: 10.
+minDistBetweenBlobs: 20.
 filterByColor: 0
 blobColor: 0
 filterByArea: 1
-minArea: 250.
+minArea: 5000.
 maxArea: 500000.
 filterByCircularity: 0
 minCircularity: 8.0000001192092896e-01
