@@ -5,7 +5,7 @@ YtCsX = 0.0 #measured x-coordinate of goal in camera space (px)
 YtCsY = 480 #measured y-coordinate of goal in camera space (px)
 YtCsD = 0.0 #measured diameter of goal (px)
 RtCs = 320.00 #desired centerpoint of goal in camera space (px)
-deadzoneCs = 42 #deadzone in camera space (px)
+deadzoneCs = 50 #deadzone in camera space (px)
 YtdF = 5.0 #measured distance to goal in world space (in)
 RtWs = 2.5 #desired distance to goal in world space (in)
 YtdL = 5.0 #measured distance of left sensor
@@ -24,7 +24,6 @@ def ExecCV():
         YtCsX = goalBlobs[0].pt[0] #store the last known X for proportional control
         YtCsY = goalBlobs[0].pt[1] #store the last known Y for wall vs goal determination
         YtCsD = goalBlobs[0].size
-        return goalBlobs
 
 def SeekGoal(): #either rotate to goal or move to goal
     while(True):
