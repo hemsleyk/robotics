@@ -20,7 +20,7 @@ FPS_SMOOTHING = 0.9
 # Default HSV ranges
 # Not anymore! Specified for hot pink!
 # Note: the range for hue is 0-180, not 0-255
-minH =   170; minS = 77; minV = 105
+minH =   170; minS = 77; minV = 80
 maxH = 180; maxS = 255; maxV = 255
 
 # Initialize the threaded camera
