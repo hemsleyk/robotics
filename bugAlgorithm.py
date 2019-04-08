@@ -51,7 +51,7 @@ def SeekGoal(): #either rotate to goal or move to goal
                         WallFollowing()
                     else:
                         appliedChange = -Kp*(RtWs-YtdF)
-                        servos.setSpeedsIPS(appliedChange),appliedChange)) #correct distance to the goal
+                        servos.setSpeedsIPS(appliedChange,appliedChange) #correct distance to the goal
                         print("approaching goal")
                         print("Distance (in): ", RtWs, "actual (in): ", YtdF)
                         print("height (px): ", YtCsY)
