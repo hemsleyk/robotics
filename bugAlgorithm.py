@@ -5,13 +5,13 @@ YtCsX = 0.0 #measured x-coordinate of goal in camera space (px)
 YtCsY = 480 #measured y-coordinate of goal in camera space (px)
 YtCsD = 0.0 #measured diameter of goal (px)
 RtCs = 320.00 #desired centerpoint of goal in camera space (px)
-deadzoneCs = 45 #deadzone in camera space (px)
+deadzoneCs = 30 #deadzone in camera space (px)
 YtdF = 5.0 #measured distance to goal in world space (in)
 RtWs = 2.5 #desired distance to goal in world space (in)
 YtdL = 5.0 #measured distance of left sensor
 YtdR = 5.0 #measured distance of right sensor
 deadzoneWs = 0.15 #deadzone in world space (in)
-satisfiedCsD = 230
+satisfiedCsD = 200
 
 def ExecCV():
     global YtdF, YtdL, YtdR, YtCsX, YtCsY, YtCsD
@@ -42,12 +42,12 @@ def SeekGoal(): #either rotate to goal or move to goal
             print("diameter (px): ", YtCsD)
             print("applied delta: ", appliedChange)
             time.sleep(0.02)
-        elif (YtdF*2.54 < 10 or YtdL*2.54 < 10) and YtCsY > 65:
+        elif (YtdF*2.54 < 10 or YtdL*2.54 < 10) and YtCsY > 100:
             WallFollowing() #allow wall following before goal is obtained
         else:
             while(ExecCV()): #as long as we can see goal
-                if math.fabs(RtWs-YtdF) > deadzoneWs and (YtCsY < 90 or YtCsD <= satisfiedCsD): #need to approach
-                    if YtdF*2.54 < 12.5 and (YtCsD < satisfiedCsD or YtCsY > 65): #non-goal wall must be in front.
+                if math.fabs(RtWs-YtdF) > deadzoneWs and (YtCsY < 100 or YtCsD <= satisfiedCsD): #need to approach
+                    if YtdF*2.54 < 12.5 and (YtCsD < satisfiedCsD or YtCsY > 100): #non-goal wall must be in front.
                         WallFollowing()
                     else:
                         appliedChange = -Kp*(RtWs-YtdF)
@@ -70,6 +70,8 @@ def WallFollowing():
     while(True):
         ExecCV()
         if(YtdF*2.54 < 12.5): #initial turn or cornered
+            global YtCsX
+            YtCsX = 0.0 #assume we turned right away from goal
             servos.Execute90(1) #90 degree right turn
         elif(YtdF*2.54 > 20 and YtdL*2.54 > 20): #fell off wall
             servos.ExecuteCoast(4.0) #get some distance
@@ -79,9 +81,9 @@ def WallFollowing():
         #    break #unobstructed path to goal
         else: #follow the wall
             print("wall following")
-            print("V ", -Kp*(10-YtdF*2.54), "W", -Kp*(10-YtdL*2.54)*math.pi/4)
-            servos.setSpeedsVW(-Kp*(10-YtdF*2.54),-Kp*(10-YtdL*2.54)*math.pi/4)
-        time.sleep(0.025)
+            print("V ", -Kp*(10-YtdF*2.54), "W", -Kp*(10-YtdL*2.54)*math.pi/2)
+            servos.setSpeedsVW(-Kp*(10-YtdF*2.54),-Kp*(10-YtdL*2.54)*math.pi/2)
+        time.sleep(0.02)
     return 0
 
 
