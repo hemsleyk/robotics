@@ -227,7 +227,7 @@ printMaze(maze)
 
 #bootup
 position = input("Cell number: ")
-heading = input("Heading: "))
+heading = input("Heading: ")
 
 senseWalls(maze[position-1])
 printMaze(maze)
