@@ -69,9 +69,9 @@ def changeCell(newHeading):
 
 	#update the position
 	if(newHeading is "N"): position-=4
-		elif(newHeading is "E"): position+=1
-		elif(newHeading is "S"): position+=4
-		elif(newHeading) is "W"): position-=1
+	elif(newHeading is "E"): position+=1
+	elif(newHeading is "S"): position+=4
+	elif(newHeading) is "W"): position-=1
 
 def senseWalls(cell):
 	#stop for 1 second, measure all sensors, take average to rule out errors.
