@@ -65,7 +65,7 @@ def changeCell(newHeading):
 	else: print("Something went horribly wrong attempting to change cells")
 	
 	#execute motion
-	servos.ExecuteCoast(8.0) #8 inch coast
+	servos.ExecuteCoast(16.0) #next cell
 	heading = newHeading #always
 
 	#update the position
