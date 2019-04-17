@@ -18,6 +18,49 @@ class Cell:
 		
 		# Store whether or not the cell has been visited before
 		self.visited = visited
+def changeCell(newHeading):
+	#needs to know: current cell, walls, next cell
+	#needs to change: global heading
+	global heading
+	if(heading is newHeading) #moving straight
+		print("Proceeding straight")
+	elif(heading is "N"):
+		if(newHeading is "E"):
+			servos.Execute90(1)
+		elif(newHeading is "S"):
+			servos.Execute90(1)
+			servos.Execute90(1)
+		elif(newHeading is "W"):
+			servos.Execute90(-1)
+	elif(heading is "E"):
+		if(newHeading is "N"):
+			servos.Execute90(-1)
+		elif(newHeading is "S"):
+			servos.Execute90(1)
+		elif(newHeading is "W"):
+			servos.Execute90(1)
+			servos.Execute90(1)
+	elif(heading is "S"):
+		if(newHeading is "N"):
+			servos.Execute90(1)
+			servos.Execute90(1)
+		elif(newHeading is "E"):
+			servos.Execute90(-1)
+		elif(newHeading is "W"):
+			servos.Execute90(1)
+	elif(heading is "W"):
+		if(newHeading is "N"):
+			servos.Execute90(1)
+		elif(newHeading is "E"):
+			servos.Execute90(1)
+			servos.Execute90(1)
+		elif(newHeading is "S"):
+			servos.Execute90(-1)
+	else: print("Something went horribly wrong attempting to change cells")
+	
+	#execute motion
+	servos.executeCoast(8.0) #8 inch coast
+	heading = newHeading #always
 
 def senseWalls(cell):
 	#stop for 1 second, measure all sensors, take average to rule out errors.
