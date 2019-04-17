@@ -87,6 +87,11 @@ def senseWalls(cell):
 		rightData.append(distance.rSensor.get_distance())
 		leftData.append(distance.lSensor.get_distance())
 		time.sleep(0.05) #measure data
+	
+	print("Front Distance: ", mean(frontData))
+	print("Left Distance: ", mean(leftData))
+	print("Right Distance", mean(rightData))
+	
 	if(heading is "N"):
 		if(mean(frontData) < wallDistThreshold): cell.north = "W"
 		else: cell.north = "O"
