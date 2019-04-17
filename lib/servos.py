@@ -51,6 +51,7 @@ def ExecuteCoast(inches): #continue current vector for certain amount of inches
     encoders.resetCounts()
     while encoders.getCounts()[0] < inches/IN_PER_TICK and encoders.getCounts()[1] < inches/IN_PER_TICK:
         time.sleep(0.01)
+    
     return 0
 
 def Execute90(dir): #-1 = left, +1 = right

@@ -26,13 +26,13 @@ def resetCounts():
     lCount = 0
     global rCount
     rCount = 0
-    print("Left encoder reset to ", lCount)
-    print("Right encoder reset to ", rCount)
+    print("Left encoder reset to ", getCounts()[0])
+    print("Right encoder reset to ", getCounts()[1])
 
 #return as tuple (immutable)
 def getCounts():
-    global lCount
-    global rCount
+    lCount
+    rCount
     #print("L:",lCount)
     #print("R:",rCount)
     return lCount,rCount
