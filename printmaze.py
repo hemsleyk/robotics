@@ -21,6 +21,7 @@ class Cell:
 
 def senseWalls(cell):
 	#stop for 1 second, measure all sensors, take average to rule out errors.
+	print("Sensing walls")
 	wallDistThreshold = 128 #5in to mm
 	frontData = []
 	rightData = []
