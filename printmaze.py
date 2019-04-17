@@ -20,10 +20,15 @@ class Cell:
 		self.visited = visited
 def changeCell(newHeading):
 	#needs to know: current cell, walls, next cell
-	#needs to change: global heading
+	#needs to change: global heading, global position
 	global heading
+	global position
+
+	#skip over rotation
 	if(heading is newHeading) #moving straight
 		print("Proceeding straight")
+
+	#rotate to new heading
 	elif(heading is "N"):
 		if(newHeading is "E"):
 			servos.Execute90(1)
@@ -61,6 +66,12 @@ def changeCell(newHeading):
 	#execute motion
 	servos.executeCoast(8.0) #8 inch coast
 	heading = newHeading #always
+
+	#update the position
+	if(newHeading is "N"): position-=4
+		elif(newHeading is "E"): position+=1
+		elif(newHeading is "S"): position+=4
+		elif(newHeading) is "W"): position-=1
 
 def senseWalls(cell):
 	#stop for 1 second, measure all sensors, take average to rule out errors.
@@ -218,5 +229,9 @@ printMaze(maze)
 position = input("Cell number: ")
 heading = input("Heading: "))
 
+senseWalls(maze[position-1])
+printMaze(maze)
+
+changeCell("S")
 senseWalls(maze[position-1])
 printMaze(maze)
