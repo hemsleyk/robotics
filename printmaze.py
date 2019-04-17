@@ -25,7 +25,7 @@ def changeCell(newHeading):
 	global position
 
 	#skip over rotation
-	if(heading is newHeading) #moving straight
+	if(heading is newHeading): #moving straight
 		print("Proceeding straight")
 
 	#rotate to new heading
