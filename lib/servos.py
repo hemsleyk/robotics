@@ -59,7 +59,7 @@ def Execute90(dir): #-1 = left, +1 = right
     print("executing 90 degree right turn")
     encoders.resetCounts()
     setSpeeds(dir*50,-dir*50)
-    while encoders.getCounts()[0] < 7 and encoders.getCounts()[1] < 7:
+    while encoders.getCounts()[0] < 14 and encoders.getCounts()[1] < 14:
         time.sleep(0.01)
     setSpeeds(0,0) #stop
     return 0
