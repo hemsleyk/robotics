@@ -1,6 +1,12 @@
 # This code provides a very simple implementation of the maze and how the maze's walls can be printed visually.
 # You may use this as a starting point or develop your own maze implementation.
 
+import time, math
+from lib import servos, ThreadedWebcam, blob, distance
+
+heading #important global that tracks robot heading as NESW
+position #important global that tracks active maze cell
+
 class Cell:
 	def __init__(self, west, north, east, south, visited = False):
 		# There are 4 walls per cell
@@ -13,7 +19,50 @@ class Cell:
 		# Store whether or not the cell has been visited before
 		self.visited = visited
 
-		
+def senseWalls(cell):
+	#stop for 1 second, measure all sensors, take average to rule out errors.
+	wallDistThreshold = 128 #5in to mm
+	frontData = []
+	rightData = []
+	leftData = []
+	start = time.monotonic()
+	while(start < time.monotonic() + 1): #take a mean to kill sensor noise
+		frontData.append(distance.fSensor.get_distance())
+		rightData.append(distance.rSensor.get_distance())
+		leftData.append(distance.lSensor.get_distance())
+	if(heading is "N"):
+		if(frontData.mean() < wallDistThreshold) cell.north = "W"
+		else cell.north = "O"
+		if(leftData.mean() < wallDistThreshold) cell.west = "W"
+		else cell.west = "O"
+		if(rightData.mean() < wallDistThreshold) cell.east = "W"
+		else cell.east = "O"
+		cell.south = "O"
+	elif(heading is "E")
+		if(frontData.mean() < wallDistThreshold) cell.west = "W"
+		else cell.west = "O"
+		if(leftData.mean() < wallDistThreshold) cell.north = "W"
+		else cell.north = "O"
+		if(rightData.mean() < wallDistThreshold) cell.south = "W"
+		else cell.south = "O"
+		cell.west = "O"
+	elif(heading is "S")
+		if(frontData.mean() < wallDistThreshold) cell.south = "W"
+		else cell.south = "O"
+		if(leftData.mean() < wallDistThreshold) cell.east = "W"
+		else cell.east = "O"
+		if(rightData.mean() < wallDistThreshold) cell.west = "W"
+		else cell.west = "O"
+		cell.north = "O"
+	elif(heading is "W")
+		if(frontData.mean() < wallDistThreshold) cell.west = "W"
+		else cell.west = "O"
+		if(leftData.mean() < wallDistThreshold) cell.south = "W"
+		else cell.south = "O"
+		if(rightData.mean() < wallDistThreshold) cell.north = "W"
+		else cell.north = "O"
+		cell.east = "O"
+
 # Helper function that verifies all the walls of the maze
 def detectMazeInconsistencies(maze):
 	# Check horizontal walls
@@ -112,11 +161,14 @@ maze = [
 	Cell('W','O','W','O', True), Cell('W','O','W','W', True), Cell('W','O','W','O', True), Cell('W','O','W','O', True),
 	Cell('W','O','W','O', True), Cell('W','W','W','O', True), Cell('W','O','W','O', True), Cell('W','O','W','?', True),
 	Cell('W','O','O','W', True), Cell('O','O','O','W', True), Cell('O','O','?','W', True), Cell('?','?','W','W', False)
-]	
+] #not necessarily restricted to grid maze
 
 # How to modify a cell
 #maze[0].east = 'W'
 #maze[0].visited = False
 
 detectMazeInconsistencies(maze)
+printMaze(maze)
+position=1
+senseWalls(maze[position-1])
 printMaze(maze)
