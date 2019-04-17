@@ -226,7 +226,7 @@ detectMazeInconsistencies(maze)
 printMaze(maze)
 
 #bootup
-position = input("Cell number: ")
+position = int(input("Cell number: "))
 heading = input("Heading: ")
 
 senseWalls(maze[position-1])
