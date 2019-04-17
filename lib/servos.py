@@ -51,7 +51,7 @@ def ExecuteCoast(inches): #continue current vector for certain amount of inches
     encoders.resetCounts()
     while encoders.getCounts()[0] < inches/IN_PER_TICK and encoders.getCounts()[1] < inches/IN_PER_TICK:
         time.sleep(0.01)
-    
+    setSpeeds(0,0) #stop
     return 0
 
 def Execute90(dir): #-1 = left, +1 = right
@@ -60,6 +60,7 @@ def Execute90(dir): #-1 = left, +1 = right
     setSpeeds(dir*50,-dir*50)
     while encoders.getCounts()[0] < 7 and encoders.getCounts()[1] < 7:
         time.sleep(0.01)
+    setSpeeds(0,0) #stop
     return 0
 
 #range 1.4-1.6, mapped from 1.5 by scaling factor of 0.001
