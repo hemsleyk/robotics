@@ -2,6 +2,7 @@
 # You may use this as a starting point or develop your own maze implementation.
 
 import time, math
+from statistics import mean
 from lib import servos, ThreadedWebcam, blob, distance
 
 heading = "N" #important global that tracks robot heading as NESW
@@ -86,35 +87,35 @@ def senseWalls(cell):
 		rightData.append(distance.rSensor.get_distance())
 		leftData.append(distance.lSensor.get_distance())
 	if(heading is "N"):
-		if(frontData.mean() < wallDistThreshold): cell.north = "W"
+		if(mean(frontData) < wallDistThreshold): cell.north = "W"
 		else: cell.north = "O"
-		if(leftData.mean() < wallDistThreshold): cell.west = "W"
+		if(mean(leftData) < wallDistThreshold): cell.west = "W"
 		else: cell.west = "O"
-		if(rightData.mean() < wallDistThreshold): cell.east = "W"
+		if(mean(rightData) < wallDistThreshold): cell.east = "W"
 		else: cell.east = "O"
 		cell.south = "O"
 	elif(heading is "E"):
-		if(frontData.mean() < wallDistThreshold): cell.west = "W"
+		if(mean(frontData) < wallDistThreshold): cell.west = "W"
 		else: cell.west = "O"
-		if(leftData.mean() < wallDistThreshold): cell.north = "W"
+		if(mean(leftData) < wallDistThreshold): cell.north = "W"
 		else: cell.north = "O"
-		if(rightData.mean() < wallDistThreshold): cell.south = "W"
+		if(mean(rightData) < wallDistThreshold): cell.south = "W"
 		else: cell.south = "O"
 		cell.west = "O"
 	elif(heading is "S"):
-		if(frontData.mean() < wallDistThreshold): cell.south = "W"
+		if(mean(frontData) < wallDistThreshold): cell.south = "W"
 		else: cell.south = "O"
-		if(leftData.mean() < wallDistThreshold): cell.east = "W"
+		if(mean(leftData) < wallDistThreshold): cell.east = "W"
 		else: cell.east = "O"
-		if(rightData.mean() < wallDistThreshold): cell.west = "W"
+		if(mean(rightData) < wallDistThreshold): cell.west = "W"
 		else: cell.west = "O"
 		cell.north = "O"
 	elif(heading is "W"):
-		if(frontData.mean() < wallDistThreshold): cell.west = "W"
+		if(mean(frontData) < wallDistThreshold): cell.west = "W"
 		else: cell.west = "O"
-		if(leftData.mean() < wallDistThreshold): cell.south = "W"
+		if(mean(leftData) < wallDistThreshold): cell.south = "W"
 		else: cell.south = "O"
-		if(rightData.mean() < wallDistThreshold): cell.north = "W"
+		if(mean(rightData) < wallDistThreshold): cell.north = "W"
 		else: cell.north = "O"
 		cell.east = "O"
 
