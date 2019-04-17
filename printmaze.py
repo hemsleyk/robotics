@@ -4,8 +4,8 @@
 import time, math
 from lib import servos, ThreadedWebcam, blob, distance
 
-heading #important global that tracks robot heading as NESW
-position #important global that tracks active maze cell
+heading = "N" #important global that tracks robot heading as NESW
+position = 1  #important global that tracks active maze cell
 
 class Cell:
 	def __init__(self, west, north, east, south, visited = False):
