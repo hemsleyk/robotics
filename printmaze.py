@@ -32,36 +32,36 @@ def senseWalls(cell):
 		rightData.append(distance.rSensor.get_distance())
 		leftData.append(distance.lSensor.get_distance())
 	if(heading is "N"):
-		if(frontData.mean() < wallDistThreshold) cell.north = "W"
-		else cell.north = "O"
-		if(leftData.mean() < wallDistThreshold) cell.west = "W"
-		else cell.west = "O"
-		if(rightData.mean() < wallDistThreshold) cell.east = "W"
-		else cell.east = "O"
+		if(frontData.mean() < wallDistThreshold): cell.north = "W"
+		else: cell.north = "O"
+		if(leftData.mean() < wallDistThreshold): cell.west = "W"
+		else: cell.west = "O"
+		if(rightData.mean() < wallDistThreshold): cell.east = "W"
+		else: cell.east = "O"
 		cell.south = "O"
-	elif(heading is "E")
-		if(frontData.mean() < wallDistThreshold) cell.west = "W"
-		else cell.west = "O"
-		if(leftData.mean() < wallDistThreshold) cell.north = "W"
-		else cell.north = "O"
-		if(rightData.mean() < wallDistThreshold) cell.south = "W"
-		else cell.south = "O"
+	elif(heading is "E"):
+		if(frontData.mean() < wallDistThreshold): cell.west = "W"
+		else: cell.west = "O"
+		if(leftData.mean() < wallDistThreshold): cell.north = "W"
+		else: cell.north = "O"
+		if(rightData.mean() < wallDistThreshold): cell.south = "W"
+		else: cell.south = "O"
 		cell.west = "O"
-	elif(heading is "S")
-		if(frontData.mean() < wallDistThreshold) cell.south = "W"
-		else cell.south = "O"
-		if(leftData.mean() < wallDistThreshold) cell.east = "W"
-		else cell.east = "O"
-		if(rightData.mean() < wallDistThreshold) cell.west = "W"
-		else cell.west = "O"
+	elif(heading is "S"):
+		if(frontData.mean() < wallDistThreshold): cell.south = "W"
+		else: cell.south = "O"
+		if(leftData.mean() < wallDistThreshold): cell.east = "W"
+		else: cell.east = "O"
+		if(rightData.mean() < wallDistThreshold): cell.west = "W"
+		else: cell.west = "O"
 		cell.north = "O"
-	elif(heading is "W")
-		if(frontData.mean() < wallDistThreshold) cell.west = "W"
-		else cell.west = "O"
-		if(leftData.mean() < wallDistThreshold) cell.south = "W"
-		else cell.south = "O"
-		if(rightData.mean() < wallDistThreshold) cell.north = "W"
-		else cell.north = "O"
+	elif(heading is "W"):
+		if(frontData.mean() < wallDistThreshold): cell.west = "W"
+		else: cell.west = "O"
+		if(leftData.mean() < wallDistThreshold): cell.south = "W"
+		else: cell.south = "O"
+		if(rightData.mean() < wallDistThreshold): cell.north = "W"
+		else: cell.north = "O"
 		cell.east = "O"
 
 # Helper function that verifies all the walls of the maze
