@@ -65,7 +65,7 @@ def changeCell(newHeading):
 	else: print("Something went horribly wrong attempting to change cells")
 	
 	#execute motion
-	servos.ExecuteCoast(16.0) #next cell
+	servos.ExecuteCoast(18.0) #next cell
 	heading = newHeading #always
 
 	#update the position
@@ -77,7 +77,7 @@ def changeCell(newHeading):
 def senseWalls(cell):
 	#stop for 1 second, measure all sensors, take average to rule out errors.
 	print("Sensing walls")
-	wallDistThreshold = 128 #5in to mm
+	wallDistThreshold = 256 #10in to mm
 	frontData = []
 	rightData = []
 	leftData = []
