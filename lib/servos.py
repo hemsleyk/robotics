@@ -46,9 +46,10 @@ def SatSpeeds0to100(speed):
     else:
         return 0
 
-def ExecuteCoast(inches): #continue current vector for certain amount of inches
+def ExecuteCoast(inches): #move forwards some number of inches
     print("Coasting for ", inches, " inches")
     encoders.resetCounts()
+    setSpeeds(50,50)
     while(encoders.getCounts()[0] < inches/IN_PER_TICK and encoders.getCounts()[1] < inches/IN_PER_TICK):
         time.sleep(0.01)
     setSpeeds(0,0) #stop
