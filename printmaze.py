@@ -82,10 +82,11 @@ def senseWalls(cell):
 	rightData = []
 	leftData = []
 	start = time.monotonic()
-	while(start +1 < time.monotonic()): #take a mean to kill sensor noise
+	while(start + 1.5 > time.monotonic()): #take a mean to kill sensor noise
 		frontData.append(distance.fSensor.get_distance())
 		rightData.append(distance.rSensor.get_distance())
 		leftData.append(distance.lSensor.get_distance())
+		time.sleep(0.05) #measure data
 	if(heading is "N"):
 		if(mean(frontData) < wallDistThreshold): cell.north = "W"
 		else: cell.north = "O"
