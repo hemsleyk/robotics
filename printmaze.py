@@ -81,10 +81,10 @@ def changeCell(newHeading):
 
 	#printing
 	printLocalization()
-	#detectMazeInconsistencies(maze)
+	detectMazeInconsistencies(maze)
 	printMaze(maze)
 
-def senseWalls(cell):
+def senseWalls(cell, NotFirst = True):
 	#stop for 1 second, measure all sensors, take average to rule out errors.
 	print("Sensing walls")
 	wallDistThreshold = 256 #10in to mm
@@ -101,7 +101,7 @@ def senseWalls(cell):
 	print("Front Distance: ", mean(frontData))
 	print("Left Distance: ", mean(leftData))
 	print("Right Distance", mean(rightData))
-	
+	cell.visited = True
 	if(heading is "N"):
 		if(mean(frontData) < wallDistThreshold): cell.north = "W"
 		else: cell.north = "O"
@@ -109,7 +109,7 @@ def senseWalls(cell):
 		else: cell.west = "O"
 		if(mean(rightData) < wallDistThreshold): cell.east = "W"
 		else: cell.east = "O"
-		cell.south = "O"
+		if(NotFirst): cell.south = "O"
 	elif(heading is "E"):
 		if(mean(frontData) < wallDistThreshold): cell.west = "W"
 		else: cell.west = "O"
@@ -117,7 +117,7 @@ def senseWalls(cell):
 		else: cell.north = "O"
 		if(mean(rightData) < wallDistThreshold): cell.south = "W"
 		else: cell.south = "O"
-		cell.west = "O"
+		if(NotFirst): cell.west = "O"
 	elif(heading is "S"):
 		if(mean(frontData) < wallDistThreshold): cell.south = "W"
 		else: cell.south = "O"
@@ -125,7 +125,7 @@ def senseWalls(cell):
 		else: cell.east = "O"
 		if(mean(rightData) < wallDistThreshold): cell.west = "W"
 		else: cell.west = "O"
-		cell.north = "O"
+		if(NotFirst): cell.north = "O"
 	elif(heading is "W"):
 		if(mean(frontData) < wallDistThreshold): cell.west = "W"
 		else: cell.west = "O"
@@ -133,7 +133,7 @@ def senseWalls(cell):
 		else: cell.south = "O"
 		if(mean(rightData) < wallDistThreshold): cell.north = "W"
 		else: cell.north = "O"
-		cell.east = "O"
+		if(NotFirst): cell.east = "O"
 
 #menu functions
 def calibrationMenu():
@@ -341,6 +341,5 @@ maze = blankMaze
 #bootup
 position = int(input("Cell number: "))
 heading = input("Heading: ")
-senseWalls(maze[position-1])
+senseWalls(maze[position-1], False)
 mainMenu()
-
