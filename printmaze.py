@@ -171,7 +171,7 @@ def mappingMenu():
 		if(choice is 1):
 			maze = blankMaze
 		else:
-			maze = sampleMaze
+			maze = exampleMaze
 
 def manualMovementMenu():
 	while(True):
