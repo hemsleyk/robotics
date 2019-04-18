@@ -166,11 +166,12 @@ def mappingMenu():
 	if(choice is 'Y'):
 		print("(0)\tEmpty map")
 		print("(1)\tSample map")
+		
 		choice = int(input("Choose: "))
-			if(choice is 1):
-				maze = blankMaze
-			else:
-				maze = sampleMaze
+		if(choice is 1):
+			maze = blankMaze
+		else:
+			maze = sampleMaze
 
 def manualMovementMenu():
 	while(True):
