@@ -81,7 +81,7 @@ def changeCell(newHeading):
 
 	#printing
 	printLocalization()
-	detectMazeInconsistencies(maze)
+	#detectMazeInconsistencies(maze)
 	printMaze(maze)
 
 def senseWalls(cell):
