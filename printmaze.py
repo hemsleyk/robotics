@@ -135,7 +135,22 @@ def senseWalls(cell):
 		cell.east = "O"
 
 #menu functions
-def manualMovement():
+def calibrationMenu():
+	global servos.IN_PER_TICK
+	choice = float(input("Enter IN_PER_TICK, 0 to cancel: "))
+		if(servos.FloatEq(choice, 0.0)):
+			#user chose to cancel
+			print("Calibraton unchanged")
+			return 0
+		elif(choice > 0 and choice < 0.5):
+			#reasonable input
+			servos.IN_PER_TICK = choice
+			return 0
+		else: #weird input
+			print("Calibraton unchanged")
+			return 1
+			
+def manualMovementMenu():
 	while(True):
 		choice = input("Enter cardinal direction to move, X for main menu: ")
 		if(choice is ('N' or 'E' or 'S' or 'W')):
@@ -153,9 +168,10 @@ def mainMenu():
 		print("(3)\tMapping Menu")
 		print("(4)\tPath Planning Menu")
 		print("(5)\tManual Movement")
+		print("(0)\tQuit")
 		choice = int(input("Select choice: "))
 		if(choice is 5)
-			manualMovement()
+			manualMovementMenu()
 		elif(choice is 0):
 			break
 		else: continue
