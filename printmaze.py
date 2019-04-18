@@ -80,6 +80,7 @@ def changeCell(newHeading):
 	senseWalls(maze[position-1])
 
 	#printing
+	printLocalization()
 	detectMazeInconsistencies(maze)
 	printMaze(maze)
 
@@ -159,6 +160,8 @@ def localizationMenu():
 	choice = input("Change heading? Y/N: ")
 	if(choice is 'Y'):
 		heading = input("Enter new heading (N, E, S, W): ")
+	
+	senseWalls(maze[position-1]) #need to sense the local cell
 
 def mappingMenu():
 	global maze
@@ -213,7 +216,17 @@ def mainMenu():
 		elif(choice is 0):
 			break
 		else: continue
-	
+def printLocalization(maze):
+	print("************")
+	print("Cell:\t",position,"Heading:\t",heading)
+	for i in range(3):
+		for j in range(3):
+			if(maze[i][j]).visited):
+				print("X", end='')
+			else:
+				print(".", end='')
+	print("************")
+
 # Helper function that verifies all the walls of the maze
 def detectMazeInconsistencies(maze):
 	# Check horizontal walls
@@ -323,9 +336,6 @@ maze = exampleMaze
 # How to modify a cell
 #maze[0].east = 'W'
 #maze[0].visited = False
-
-detectMazeInconsistencies(maze)
-printMaze(maze)
 
 #bootup
 position = int(input("Cell number: "))
