@@ -179,7 +179,7 @@ def mappingMenu():
 def manualMovementMenu():
 	while(True):
 		choice = input("Enter cardinal direction to move, X for main menu: ")
-		if(choice is ('N' or 'E' or 'S' or 'W')):
+		if(choice is 'N' or choice is 'E' or choice is 'S' or choice is 'W'):
 			changeCell(choice)
 			senseWalls(maze[position-1])
 		elif(choice is 'X'):
