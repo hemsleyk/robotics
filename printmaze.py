@@ -222,7 +222,7 @@ def printLocalization():
 	print("Cell:\t",position,"Heading:\t",heading)
 	for i in range(3):
 		for j in range(3):
-			if(maze[i][j].visited):
+			if(maze[i * 4 + j].visited):
 				print("X", end='')
 			else:
 				print(".", end='')
