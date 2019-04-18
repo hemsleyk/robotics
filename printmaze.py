@@ -217,7 +217,7 @@ def mainMenu():
 		elif(choice is 0):
 			break
 		else: continue
-def printLocalization(maze):
+def printLocalization():
 	print("************")
 	print("Cell:\t",position,"Heading:\t",heading)
 	for i in range(3):
