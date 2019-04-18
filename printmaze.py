@@ -137,17 +137,17 @@ def senseWalls(cell):
 #menu functions
 def calibrationMenu():
 	choice = float(input("Enter IN_PER_TICK, 0 to cancel: "))
-		if(servos.FloatEq(choice, 0.0)):
-			#user chose to cancel
-			print("Calibraton unchanged")
-			return 0
-		elif(choice > 0 and choice < 0.5):
-			#reasonable input
-			servos.IN_PER_TICK = choice
-			return 0
-		else: #weird input
-			print("Calibraton unchanged")
-			return 1
+	if(servos.FloatEq(choice, 0.0)):
+		#user chose to cancel
+		print("Calibraton unchanged")
+		return 0
+	elif(choice > 0 and choice < 0.5):
+		#reasonable input
+		servos.IN_PER_TICK = choice
+		return 0
+	else: #weird input
+		print("Calibraton unchanged")
+		return 1
 def localizationMenu():
 	global position
 	global heading
