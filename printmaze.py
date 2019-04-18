@@ -7,6 +7,7 @@ from lib import servos, ThreadedWebcam, blob, distance
 
 heading = "N" #important global that tracks robot heading as NESW
 position = 1  #important global that tracks active maze cell
+maze = [] #live data maze
 
 class Cell:
 	def __init__(self, west, north, east, south, visited = False):
@@ -21,9 +22,10 @@ class Cell:
 		self.visited = visited
 def changeCell(newHeading):
 	#needs to know: current cell, walls, next cell
-	#needs to change: global heading, global position
+	#needs to change: global heading, global position, cell data
 	global heading
 	global position
+	global maze
 
 	#skip over rotation
 	if(heading is newHeading): #moving straight
@@ -73,6 +75,13 @@ def changeCell(newHeading):
 	elif(newHeading is "E"): position+=1
 	elif(newHeading is "S"): position+=4
 	elif(newHeading is "W"): position-=1
+
+	#gather data on the new cell
+	senseWalls(maze[position-1])
+
+	#printing
+	detectMazeInconsistencies(maze)
+	printMaze(maze)
 
 def senseWalls(cell):
 	#stop for 1 second, measure all sensors, take average to rule out errors.
@@ -125,6 +134,32 @@ def senseWalls(cell):
 		else: cell.north = "O"
 		cell.east = "O"
 
+#menu functions
+def manualMovement():
+	while(True):
+		choice = input("Enter cardinal direction to move, X for main menu: ")
+		if(choice is ('N' or 'E' or 'S' or 'W')):
+			changeCell(choice)
+			senseWalls(maze[position-1])
+		elif(choice is 'X'):
+			break
+		else: continue
+	return 0
+
+def mainMenu():
+	while(True):
+		print("(1)\tCalibration Menu")
+		print("(2)\tLocalization Menu")
+		print("(3)\tMapping Menu")
+		print("(4)\tPath Planning Menu")
+		print("(5)\tManual Movement")
+		choice = int(input("Select choice: "))
+		if(choice is 5)
+			manualMovement()
+		elif(choice is 0):
+			break
+		else: continue
+	
 # Helper function that verifies all the walls of the maze
 def detectMazeInconsistencies(maze):
 	# Check horizontal walls
@@ -218,13 +253,19 @@ def printMaze(maze, hRes = 4, vRes = 2):
 
 # Initialize the maze with a set of walls and visited cells
 # The bottom right cell is marked as unvisited and with unknown walls
-maze = [
+exampleMaze = [
 	Cell('W','W','O','O', True), Cell('O','W','O','O', True), Cell('O','W','O','O', True), Cell('O','W','W','O', True),
 	Cell('W','O','W','O', True), Cell('W','O','W','W', True), Cell('W','O','W','O', True), Cell('W','O','W','O', True),
 	Cell('W','O','W','O', True), Cell('W','W','W','O', True), Cell('W','O','W','O', True), Cell('W','O','W','?', True),
 	Cell('W','O','O','W', True), Cell('O','O','O','W', True), Cell('O','O','?','W', True), Cell('?','?','W','W', False)
 ] #not necessarily restricted to grid maze
-
+blankMaze = [
+	Cell('W','W','?','?', False), Cell('?','W','?','?', False), Cell('?','W','?','?', False), Cell('?','W','W','?', False),
+	Cell('W','?','?','?', False), Cell('?','?','?','?', False), Cell('?','?','?','?', False), Cell('?','?','W','?', False),
+	Cell('W','?','?','?', False), Cell('?','?','?','?', False), Cell('?','?','?','?', False), Cell('?','?','W','?', False),
+	Cell('W','?','?','W', False), Cell('?','?','?','W', False), Cell('?','?','?','W', False), Cell('?','?','W','W', False)
+]
+maze = exampleMaze
 # How to modify a cell
 #maze[0].east = 'W'
 #maze[0].visited = False
@@ -235,10 +276,6 @@ printMaze(maze)
 #bootup
 position = int(input("Cell number: "))
 heading = input("Heading: ")
-
 senseWalls(maze[position-1])
-printMaze(maze)
+mainMenu()
 
-changeCell("S")
-senseWalls(maze[position-1])
-printMaze(maze)
