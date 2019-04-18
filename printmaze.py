@@ -333,7 +333,7 @@ blankMaze = [
 	Cell('W','?','?','?', False), Cell('?','?','?','?', False), Cell('?','?','?','?', False), Cell('?','?','W','?', False),
 	Cell('W','?','?','W', False), Cell('?','?','?','W', False), Cell('?','?','?','W', False), Cell('?','?','W','W', False)
 ]
-maze = exampleMaze
+maze = blankMaze
 # How to modify a cell
 #maze[0].east = 'W'
 #maze[0].visited = False
