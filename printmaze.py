@@ -220,8 +220,8 @@ def mainMenu():
 def printLocalization():
 	print("************")
 	print("Cell:\t",position,"Heading:\t",heading)
-	for i in range(3):
-		for j in range(3):
+	for i in range(4):
+		for j in range(4):
 			if(maze[i * 4 + j].visited):
 				print("X", end='')
 			else:
