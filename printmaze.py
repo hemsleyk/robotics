@@ -226,6 +226,7 @@ def printLocalization():
 				print("X", end='')
 			else:
 				print(".", end='')
+		print('\n')
 	print("************")
 
 # Helper function that verifies all the walls of the maze
