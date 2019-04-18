@@ -153,12 +153,11 @@ def localizationMenu():
 	global heading
 
 	choice = input("Change active cell? Y/N: ")
-	
 	if(choice is 'Y'):
 		position = int(input("Enter new active cell: "))
 	
 	choice = input("Change heading? Y/N: ")
-	if(choice is 'Y':
+	if(choice is 'Y'):
 		heading = input("Enter new heading (N, E, S, W): ")
 
 def mappingMenu():
