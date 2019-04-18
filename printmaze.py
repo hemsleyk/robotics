@@ -136,7 +136,6 @@ def senseWalls(cell):
 
 #menu functions
 def calibrationMenu():
-	global servos.IN_PER_TICK
 	choice = float(input("Enter IN_PER_TICK, 0 to cancel: "))
 		if(servos.FloatEq(choice, 0.0)):
 			#user chose to cancel
@@ -149,7 +148,31 @@ def calibrationMenu():
 		else: #weird input
 			print("Calibraton unchanged")
 			return 1
-			
+def localizationMenu():
+	global position
+	global heading
+
+	choice = input("Change active cell? Y/N: ")
+	
+	if(choice is 'Y'):
+		position = int(input("Enter new active cell: "))
+	
+	choice = input("Change heading? Y/N: ")
+	if(choice is 'Y':
+		heading = input("Enter new heading (N, E, S, W): ")
+
+def mappingMenu():
+	global maze
+	choice = input("Reload map? Y/N")
+	if(choice is 'Y'):
+		print("(0)\tEmpty map")
+		print("(1)\tSample map")
+		choice = int(input("Choose: "))
+			if(choice is 1):
+				maze = blankMaze
+			else:
+				maze = sampleMaze
+
 def manualMovementMenu():
 	while(True):
 		choice = input("Enter cardinal direction to move, X for main menu: ")
@@ -161,6 +184,13 @@ def manualMovementMenu():
 		else: continue
 	return 0
 
+def pathPlanningMenu():
+	#You have been assigned:
+	#Starting Cell: 1
+	#Ending Cell: 15
+
+	return 0
+
 def mainMenu():
 	while(True):
 		print("(1)\tCalibration Menu")
@@ -170,7 +200,15 @@ def mainMenu():
 		print("(5)\tManual Movement")
 		print("(0)\tQuit")
 		choice = int(input("Select choice: "))
-		if(choice is 5)
+		if(choice is 1):
+			calibrationMenu()
+		elif(choice is 2):
+			localizationMenu()
+		elif(choice is 3):
+			mappingMenu()
+		elif(choice is 4):
+			pathPlanningMenu()
+		elif(choice is 5):
 			manualMovementMenu()
 		elif(choice is 0):
 			break
