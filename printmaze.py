@@ -137,6 +137,7 @@ def senseWalls(cell):
 
 #menu functions
 def calibrationMenu():
+	print("Current inches/tick: ",servos.IN_PER_TICK)
 	choice = float(input("Enter IN_PER_TICK, 0 to cancel: "))
 	if(servos.FloatEq(choice, 0.0)):
 		#user chose to cancel
