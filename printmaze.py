@@ -6,9 +6,15 @@ from statistics import mean
 from collections import deque
 from lib import servos, ThreadedWebcam, blob, distance, encoders
 
+
 heading = "N" #important global that tracks robot heading as NESW
 position = 1  #important global that tracks active maze cell
 maze = [] #live data maze
+
+wallDistThreshold = 256 #10in to mm
+frontData = []
+rightData = []
+leftData = []
 
 class Cell:
 	def __init__(self, west, north, east, south, visited = False):
@@ -87,6 +93,10 @@ def changeCell(newHeading):
 
 def cellMove(): #move forwards some number of inches
 	encoders.resetCounts()
+	
+	global rightData
+	global leftData
+
 	Kp = 0.75 #PID controller corrective strength
 	YtdL = 5.0 #measured distance of left sensor
 	YtdR = 5.0 #measured distance of right sensor
@@ -94,18 +104,31 @@ def cellMove(): #move forwards some number of inches
 	while(encoders.getCounts()[0] < inches/servos.IN_PER_TICK and encoders.getCounts()[1] < inches/servos.IN_PER_TICK):
 		YtdR = distance.rSensor.get_distance()
 		YtdL = distance.lSensor.get_distance()
-		servos.setSpeedsVW(1.5,-Kp*(0-(YtdR-YtdL))*math.pi/2) #try to make left / right sensor discrepancy zero
+		if(mean(rightData) < wallDistThreshold and mean(leftData) < wallDistThreshold): #walls on both sides
+			servos.setSpeedsVW(1.5,-Kp*(0-(YtdR-YtdL))*math.pi/2) #try to make left / right sensor discrepancy zero
+		elif(mean(leftData)) < wallDistThreshold): #wall on left
+			servos.setSpeedsVW(1.5,-Kp*(100-YtdL))*math.pi/2)
+		elif(mean(rightData)) < wallDistThreshold): #wall on right
+			servos.setSpeedsVW(1.5,-Kp*(100-YtdR))*math.pi/2)
+		#update model
+		rightData.append(distance.rSensor.get_distance())
+		leftData.append(distance.lSensor.get_distance())
 		time.sleep(0.05)
-	setSpeeds(0,0) #stop
+	servos.setSpeeds(0,0) #stop
 	return 0
 
 def senseWalls(cell, NotFirst = True):
 	#stop for 1 second, measure all sensors, take average to rule out errors.
 	print("Sensing walls")
-	wallDistThreshold = 256 #10in to mm
-	frontData = []
-	rightData = []
-	leftData = []
+	
+	global frontData
+	global rightData
+	global leftData
+
+	rightData.clear()
+	leftData.clear()
+	frontData.clear()
+	
 	start = time.monotonic()
 	while(start + 1.5 > time.monotonic()): #take a mean to kill sensor noise
 		frontData.append(distance.fSensor.get_distance())
@@ -149,7 +172,6 @@ def senseWalls(cell, NotFirst = True):
 		if(mean(rightData) < wallDistThreshold): cell.north = "W"
 		else: cell.north = "O"
 		if(NotFirst): cell.east = "O"
-
 #menu functions
 def calibrationMenu():
 	print("Current inches/tick: ",servos.IN_PER_TICK)
