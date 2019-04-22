@@ -96,8 +96,8 @@ def cellMove(): #move forwards some number of inches
 		YtdL = distance.lSensor.get_distance()
 		servos.setSpeedsVW(1.5,-Kp*(0-(YtdR-YtdL))*math.pi/2) #try to make left / right sensor discrepancy zero
 		time.sleep(0.05)
-    setSpeeds(0,0) #stop
-    return 0
+	setSpeeds(0,0) #stop
+	return 0
 
 def senseWalls(cell, NotFirst = True):
 	#stop for 1 second, measure all sensors, take average to rule out errors.
