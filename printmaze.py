@@ -91,7 +91,7 @@ def cellMove(): #move forwards some number of inches
 	YtdL = 5.0 #measured distance of left sensor
 	YtdR = 5.0 #measured distance of right sensor
 	inches = 18.0 #distance between cells
-	while(encoders.getCounts()[0] < inches/IN_PER_TICK and encoders.getCounts()[1] < inches/IN_PER_TICK):
+	while(encoders.getCounts()[0] < inches/servos.IN_PER_TICK and encoders.getCounts()[1] < inches/servos.IN_PER_TICK):
 		YtdR = distance.rSensor.get_distance()
 		YtdL = distance.lSensor.get_distance()
 		servos.setSpeedsVW(1.5,-Kp*(0-(YtdR-YtdL))*math.pi/2) #try to make left / right sensor discrepancy zero
