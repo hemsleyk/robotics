@@ -245,10 +245,11 @@ def pathPlan(startCell,endCell):
 	#perform a depth first search
 	visited = []
 	path = deque([]) #empty deque that stores final path as cardinals
-	for(cell in maze):
+	for cell in maze :
 		visited.append(False) #copy in FALSEs
 	pathPlanUtil(startCell,endCell,visited,path)
 	print(path)
+	return 0
 
 
 def mainMenu():
