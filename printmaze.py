@@ -105,13 +105,13 @@ def cellMove(): #move forwards some number of inches
 		YtdR = distance.rSensor.get_distance()
 		YtdL = distance.lSensor.get_distance()
 		if(mean(rightData) < wallDistThreshold and mean(leftData) < wallDistThreshold): #walls on both sides
-			print("Zeroing in tunnel")
+			#print("Zeroing in tunnel")
 			servos.setSpeedsVW(1.5,-Kp*(0-(YtdR-YtdL))*math.pi/2) #try to make left / right sensor discrepancy zero
 		elif(mean(leftData) < wallDistThreshold): #wall on left
-			print("Following wall to left")
-			servos.setSpeedsVW(1.5,-Kp*(100-YtdL)*math.pi/2)
+			#print("Following wall to left")
+			servos.setSpeedsVW(1.5,Kp*(100-YtdL)*math.pi/2)
 		elif(mean(rightData) < wallDistThreshold): #wall on right
-			print("Following wall to right")
+			#print("Following wall to right")
 			servos.setSpeedsVW(1.5,-Kp*(100-YtdR)*math.pi/2)
 		#update model
 		rightData.append(distance.rSensor.get_distance())
