@@ -86,7 +86,7 @@ def changeCell(newHeading):
 	printMaze(maze)
 
 def cellMove(): #move forwards some number of inches
-    encoders.resetCounts()
+	encoders.resetCounts()
 	Kp = 0.75 #PID controller corrective strength
 	YtdL = 5.0 #measured distance of left sensor
 	YtdR = 5.0 #measured distance of right sensor
