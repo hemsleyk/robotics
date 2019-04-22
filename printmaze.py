@@ -221,7 +221,7 @@ def pathPlanningMenu():
 def pathPlanUtil(currentCell,endCell,visited,path):
 	visited[currentCell] = True
 	
-	if(currentCell is endCell) return 0
+	if(currentCell is endCell): return 0
 	
 	print(currentCell)
 	if(maze[currentCell]).north is "O":
