@@ -3,6 +3,7 @@
 
 import time, math
 from statistics import mean
+from collections import deque
 from lib import servos, ThreadedWebcam, blob, distance, encoders
 
 heading = "N" #important global that tracks robot heading as NESW
@@ -206,38 +207,48 @@ def pathPlanningMenu():
 	#You have been assigned:
 	#Starting Cell: 1
 	#Ending Cell: 15
-	startCell = int(input("Enter starting cell number, 0 to cancel: "))
-	if(startCell is 0):
+	startCell = int(input("Enter starting cell number, 0 for current, -1 to cancel: "))
+	if(startCell is -1):
 		return 0
+	elif(startCell is 0):
+		startCell = position
 	
 	#implicit else, proceed
 	endCell = int(input("Enter ending cell number: "))
-
+	pathPlan(startCell,endCell)
 
 	return 0
-def pathPlanUtil(currentCell,endCell,visited):
+def pathPlanUtil(currentCell,endCell,visited,path):
 	visited[currentCell] = True
+	
+	if(currentCell is endCell) return 0
+	
 	print(currentCell)
 	if(maze[currentCell]).north is "O":
 		if(visited[currentCell-4] is False):
+			path.append("N")
 			pathPlanUtil(currentCell-4,endCell,visited)
 	if(maze[currentCell]).east is "O":
 		if(visited[currentCell+4] is False):
+			path.append("E")
 			pathPlanUtil(currentCell+1,endCell,visited)
 	if(maze[currentCell]).south is "O":
 		if(visited[currentCell+4] is False):
+			path.append("S")
 			pathPlanUtil(currentCell+4,endCell,visited)
 	if(maze[currentCell]).west is "O":
 		if(visited[currentCell-1] is False):
+			path.append("W")
 			pathPlanUtil(currentCell-1,endCell,visited)
 
 def pathPlan(startCell,endCell):
 	#perform a depth first search
 	visited = []
-	path = [] #empty list that stores final path as cardinals
+	path = deque([]) #empty deque that stores final path as cardinals
 	for(cell in maze):
 		visited.append(False) #copy in FALSEs
-	pathPlanUtil(startCell,endCell,visited)
+	pathPlanUtil(startCell,endCell,visited,path)
+	print(path)
 
 
 def mainMenu():
