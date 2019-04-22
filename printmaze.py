@@ -3,7 +3,7 @@
 
 import time, math
 from statistics import mean
-from lib import servos, ThreadedWebcam, blob, distance
+from lib import servos, ThreadedWebcam, blob, distance, encoders
 
 heading = "N" #important global that tracks robot heading as NESW
 position = 1  #important global that tracks active maze cell
@@ -67,7 +67,7 @@ def changeCell(newHeading):
 	else: print("Something went horribly wrong attempting to change cells")
 	
 	#execute motion
-	servos.ExecuteCoast(18.0) #next cell
+	cellMove() #next cell
 	heading = newHeading #always
 
 	#update the position
@@ -83,6 +83,20 @@ def changeCell(newHeading):
 	printLocalization()
 	#detectMazeInconsistencies(maze)
 	printMaze(maze)
+
+def cellMove(): #move forwards some number of inches
+    encoders.resetCounts()
+	Kp = 0.75 #PID controller corrective strength
+	YtdL = 5.0 #measured distance of left sensor
+	YtdR = 5.0 #measured distance of right sensor
+	inches = 18.0 #distance between cells
+    while(encoders.getCounts()[0] < inches/IN_PER_TICK and encoders.getCounts()[1] < inches/IN_PER_TICK):
+        YtdR = distance.rSensor.get_distance()
+    	YtdL = distance.lSensor.get_distance()
+		servos.setSpeedsVW(1.5,-Kp*(0-(YtdR-YtdL))*math.pi/2) #try to make left / right sensor discrepancy zero
+		time.sleep(0.05)
+    setSpeeds(0,0) #stop
+    return 0
 
 def senseWalls(cell, NotFirst = True):
 	#stop for 1 second, measure all sensors, take average to rule out errors.
@@ -192,8 +206,39 @@ def pathPlanningMenu():
 	#You have been assigned:
 	#Starting Cell: 1
 	#Ending Cell: 15
+	startCell = int(input("Enter starting cell number, 0 to cancel: "))
+	if(startCell is 0):
+		return 0
+	
+	#implicit else, proceed
+	endCell = int(input("Enter ending cell number: "))
+
 
 	return 0
+def pathPlanUtil(currentCell,endCell,visited):
+	visited[currentCell] = True
+	print(currentCell)
+	if(maze[currentCell]).north is "O":
+		if(visited[currentCell-4] is False):
+			pathPlanUtil(currentCell-4,endCell,visited)
+	if(maze[currentCell]).east is "O":
+		if(visited[currentCell+4] is False):
+			pathPlanUtil(currentCell+1,endCell,visited)
+	if(maze[currentCell]).south is "O":
+		if(visited[currentCell+4] is False):
+			pathPlanUtil(currentCell+4,endCell,visited)
+	if(maze[currentCell]).west is "O":
+		if(visited[currentCell-1] is False):
+			pathPlanUtil(currentCell-1,endCell,visited)
+
+def pathPlan(startCell,endCell):
+	#perform a depth first search
+	visited = []
+	path = [] #empty list that stores final path as cardinals
+	for(cell in maze):
+		visited.append(False) #copy in FALSEs
+	pathPlanUtil(startCell,endCell,visited)
+
 
 def mainMenu():
 	while(True):

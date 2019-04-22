@@ -79,8 +79,9 @@ def setSpeedsIPS(ipsLeft,ipsRight):
 
 def setSpeedsVW(v,w):
     if(FloatEq(w,0)):
-        print("w must not be zero!")
-        return 1
+        #move in a straight line, do not attempt division by zero
+        setSpeedsIPS(v,v)
+        return 0
     else:
         R = v/w #radius of curve = distance to ICC
         if(w>0):
